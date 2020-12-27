@@ -47,39 +47,41 @@ export const Layout = ()=>{
             <Text style={styles.text2}>Akash</Text>
             <LineChart
                 data={{
-                    labels: ["January", "February", "March", "April", "May", "June"],
+                    labels: ["SUN","MON", "TUE", "WED", "THU", "FRI", "SAT"],
                     datasets: [
                         {
                         data: [
-                            Math.random() * 100,
-                            Math.random() * 100,
-                            Math.random() * 100,
-                            Math.random() * 100,
-                            Math.random() * 100,
-                            Math.random() * 100
+                            0,
+                            100,
+                            1000,
+                            50,
+                            100,
+                            20,
+                            10
                         ]
                         }
                     ]
                 }}
                 width={Dimensions.get("window").width} 
-                height={220}
-                yAxisLabel="$"
-                yAxisSuffix="k"
+                height={250}
+                yAxisLabel="₹ "
                 yAxisInterval={1} // optional, defaults to 1
                 chartConfig={{
                     backgroundColor: "#e26a00",
-                    backgroundGradientFrom: "#fb8c00",
-                    backgroundGradientTo: "#ffa726",
-                    decimalPlaces: 2, // optional, defaults to 2dp
+                    backgroundGradientFrom: "rgba(100,0,255,1)",
+                    backgroundGradientTo: "rgba(0,255,240,1)",
+                    decimalPlaces: 0, // optional, defaults to 2dp
                     color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                    labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                    labelColor: (opacity = 1) => `rgba(255, 255, 255, 1)`,
+
                     style: {
-                        borderRadius: 16
+                        borderRadius: 10,
+                        
                     },
                     propsForDots: {
                         r: "6",
-                        strokeWidth: "2",
-                        stroke: "#ffa726"
+                        strokeWidth: "5",
+                        stroke: "rgba(100,255,240,1)"
                     }
                 }}
                 bezier

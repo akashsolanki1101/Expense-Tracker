@@ -14,6 +14,7 @@
     "react-native": "0.63.4",
     "react-native-appearance": "^0.3.4",
     "react-native-chart-kit": "^6.9.0",
+    "react-native-svg": "^12.1.0",
     "react-native-vector-icons": "^7.1.0",
     "react-navigation": "^4.4.3"
   },
