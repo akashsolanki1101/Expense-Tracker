@@ -1,7 +1,7 @@
 import React from 'react'
 
 import {Layout} from "./components/layout/layout"
-import {ThemeManager} from './ui/themeManager/themeManager'
+import {ThemeManager} from './components/ui/themeManager/themeManager'
 
 const App = ()=>{
   return(
