@@ -11,7 +11,7 @@ const useStyles=()=>{
         StyleSheet.create({
             container:{
                 flex:1,
-                backgroundColor:theme.theme.background,
+                backgroundColor:theme.theme.primaryBackground,
                 paddingHorizontal:20,
                 paddingVertical:20
             },
@@ -42,7 +42,7 @@ const useStyles=()=>{
     )
 }
 
-export const Home = ()=>{
+export const SpendingHomePage = ()=>{
     const styles = useStyles()
     const theme = useTheme()
 

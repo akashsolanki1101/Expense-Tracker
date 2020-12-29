@@ -1,8 +1,13 @@
-import React from 'react'
+import React,{useEffect,useCallback} from 'react'
 
 import {View,StyleSheet} from 'react-native'
+import 'react-native-gesture-handler';
+import {NavigationContainer} from '@react-navigation/native'
+import changeNavigationBarColor from 'react-native-navigation-bar-color'
 
-import {Home} from '../home/homePage'
+import {SpendingHomePage} from '../spendings/spendingHomePage'
+import {TabNavigator} from '../../navigation/navigation'
+import {useTheme} from '../ui/themeContext/themeContext'
 
 const useStyles = ()=>{
     return(
@@ -14,12 +19,31 @@ const useStyles = ()=>{
     )
 }
 
+
+
 export const Layout = ()=>{
     const styles = useStyles()
+    const theme = useTheme()
+
+    const changeColor = useCallback(async()=>{
+        try{
+            const res = await changeNavigationBarColor(theme.theme.secondaryBackground);
+            console.log(res);
+        }catch(e){
+            console.log(e);
+        }
+    },[])
+
+    useEffect(()=>{
+        changeColor()
+    },[changeColor])
     
+
     return(
         <View style={styles.container}>
-            <Home/>        
+            <NavigationContainer>
+                <TabNavigator/>
+            </NavigationContainer>       
         </View>
     )
 }

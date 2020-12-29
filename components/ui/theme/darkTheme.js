@@ -1,6 +1,7 @@
 export const dark = {
     theme:{
-        background:'rgb(20,18,20)',
+        primaryBackground:'rgb(20,18,20)',
+        secondaryBackground:'#303135',
         primary:'#fff',
         secondary:'#aaa'
     }
