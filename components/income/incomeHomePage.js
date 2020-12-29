@@ -25,7 +25,15 @@ export const IncomeHomePage = ()=>{
     const styles = useStyles()
     return(
         <View style={styles.container}>
-            <CategoryCard/>
+            <CategoryCard
+                categoryName='Fast Food'
+                percent={46}
+                imgUrl='../../../assets/img/categoryCard/fast-food.png'
+            />
+            <CategoryCard
+                categoryName='Grocery'
+                percent={90}
+                imgUrl='../../../assets/img/categoryCard/shopping.png'            />
         </View>
     )
 }
