@@ -102,6 +102,7 @@ export const Chart = ()=>{
                 height={230}
                 yAxisLabel="₹ "
                 yAxisInterval={1}
+                fromZero={true}
                 chartConfig={chartConfig}
                 bezier
                 style={{

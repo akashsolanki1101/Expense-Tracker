@@ -1,5 +1,6 @@
 import React from 'react'
 
+import {Text} from 'react-native'
 import {createStackNavigator} from '@react-navigation/stack'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -46,7 +47,7 @@ export const TabNavigator = ()=>{
         <Tab.Navigator
             // tabBar={()=>{}}
             tabBarOptions={{
-                activeTintColor:'#fff',
+                activeTintColor:theme.theme.activeColor,
                 tabStyle:{
                     backgroundColor:theme.theme.secondaryBackground,
                     justifyContent:'center',
@@ -57,7 +58,8 @@ export const TabNavigator = ()=>{
                 name="Spendings"
                 component={SpedingsNavigator}
                 options={{
-                    tabBarIcon:({color})=>(<FontAwesome name="minus" size={20} color='white'/>)
+                    tabBarIcon:({color})=>(<FontAwesome name="minus" size={20} color={color}/>),
+                    tabBarLabel:({color})=>(<Text style={{color:color}}>Spendings</Text>)
                 }}
 
             />
@@ -65,7 +67,8 @@ export const TabNavigator = ()=>{
                 name="Income"
                 component={IncomeNavigator}
                 options={{
-                    tabBarIcon:({color})=>(<FontAwesome name="home" size={20} color='white'/>)
+                    tabBarIcon:({color})=>(<FontAwesome name="plus" size={20} color={color}/>),
+                    tabBarLabel:({color})=>(<Text style={{color:color}}>Incomes</Text>)
                 }}
             />
         </Tab.Navigator>

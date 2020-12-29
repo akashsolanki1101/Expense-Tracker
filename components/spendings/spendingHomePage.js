@@ -4,6 +4,7 @@ import {View,Text,StyleSheet,StatusBar} from 'react-native'
 
 import {useTheme} from '../ui/themeContext/themeContext'
 import {Chart} from '../chart/chart'
+import {TransactionCard} from '../cards/transactionCard/transactionCard'
 
 const useStyles=()=>{
     const theme = useTheme()
@@ -16,28 +17,64 @@ const useStyles=()=>{
                 paddingVertical:20
             },
             upperBlock:{
-                borderWidth:1,
-                borderColor:'orange'
+                // borderWidth:1,
+                // borderColor:'orange'
             },
             helloText:{
-                color:theme.theme.secondary,
+                color:theme.theme.secondaryText,
                 fontSize:25,
                 fontWeight:'normal'
             },
             nameText:{
-                color:theme.theme.primary,
+                color:theme.theme.primaryText,
                 fontSize:40,
-                fontWeight:'bold'
+                fontWeight:'bold',
             },
             middleBlock:{
-                borderWidth:1,
-                borderColor:'red',
                 width:'100%',
+                marginTop:10
+            },
+            statsContainer:{
+                width:'100%',
+                flexDirection:'row',
+                justifyContent:'space-between'
+            },
+            amountContainer:{},
+            amountText:{
+                fontSize:20,
+                color:theme.theme.primaryText,
+                fontWeight:'bold'
+            },
+            durationText:{
+                fontSize:13,
+                color:theme.theme.secondaryText
+            },
+            statisticsTextContainer:{
+                justifyContent:'center',
+                alignItems:'center'
+            },
+            statisticsText:{
+                color:theme.theme.primaryText
+            },
+            chartContainer:{
+                width:'100%',
+                height:232,
+                marginTop:20,
+                elevation:5,
+                shadowColor:'#fff'
             },
             lowerBlock:{
-                borderWidth:1,
-                borderColor:'white'
-            }
+                // borderWidth:1,
+                // borderColor:'white',
+                marginTop:15,
+            },
+            transactionsContainer:{},
+            transactionsTextContainer:{},
+            transactionsText:{
+                color:theme.theme.primaryText,
+                fontSize:22,
+                fontWeight:'bold'
+            },
         })
     )
 }
@@ -48,7 +85,6 @@ export const SpendingHomePage = ()=>{
 
     return (
         <View style={styles.container}>
-            <StatusBar barStyle={theme.mode==='dark'?'light-content':'dark-content'} backgroundColor={theme.theme.background}/>
             <View style={styles.upperBlock}>
                 <View style={styles.textContainer}>
                     <Text style={styles.helloText}>Hello,</Text>
@@ -56,14 +92,27 @@ export const SpendingHomePage = ()=>{
                 </View>
             </View>
             <View style={styles.middleBlock}>
-                <View style={styles.textContainer}>
+                <View style={styles.statsContainer}>
+                    <View style={styles.amountContainer}>
+                        <Text style={styles.amountText}>₹ 1,673.80</Text>
+                        <Text style={styles.durationText}>spent during this period</Text>
+                    </View>
+                    <View style={styles.statisticsTextContainer}>
+                        <Text style={styles.statisticsText}>Statistics</Text>
+                    </View>
+                </View>
+                <View style={styles.chartContainer}>
                     <Chart/>
                 </View>
             </View>
             <View style={styles.lowerBlock}>
                 <View style={styles.transactionsContainer}>
-
+                    <View style={styles.transactionsTextContainer}>
+                        <Text style={styles.transactionsText}>Transactions</Text>
+                    </View>
                 </View>
+                <TransactionCard/>
+                <TransactionCard/>
             </View>
         </View>
     )

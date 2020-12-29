@@ -1,6 +1,6 @@
 import React,{useEffect,useCallback} from 'react'
 
-import {View,StyleSheet} from 'react-native'
+import {View,StyleSheet,StatusBar} from 'react-native'
 import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native'
 import changeNavigationBarColor from 'react-native-navigation-bar-color'
@@ -41,6 +41,7 @@ export const Layout = ()=>{
 
     return(
         <View style={styles.container}>
+            <StatusBar barStyle={theme.mode==='dark'?'light-content':'dark-content'} backgroundColor={theme.theme.primaryBackground}/>
             <NavigationContainer>
                 <TabNavigator/>
             </NavigationContainer>       

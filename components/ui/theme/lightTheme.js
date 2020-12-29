@@ -1,7 +1,9 @@
 export const light = {
     theme:{
-        background:'#ffffff',
-        primary:'#000',
-        secondary:'#aaa'
+        primaryBackground:'#ffffff',
+        secondaryBackground:'#ffffff',
+        activeColor:'#d83025',
+        primaryText:'#000',
+        secondaryText:'#aaa'
     }
 }

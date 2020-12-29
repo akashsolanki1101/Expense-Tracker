@@ -1,8 +1,10 @@
 export const dark = {
     theme:{
-        primaryBackground:'rgb(20,18,20)',
-        secondaryBackground:'#303135',
-        primary:'#fff',
-        secondary:'#aaa'
+        primaryBackground:'#000',
+        secondaryBackground:'#363537',
+        activeColor:'#f28b82',
+        primaryText:'#fff',
+        secondaryText:'#605f60',
+        categoryIconBackground:'#4c403f'
     }
 }
