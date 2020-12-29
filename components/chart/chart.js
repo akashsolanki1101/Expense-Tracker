@@ -104,9 +104,15 @@ export const Chart = ()=>{
                 yAxisInterval={1}
                 fromZero={true}
                 chartConfig={chartConfig}
+                withInnerLines={false}
+                withOuterLines={false}
                 bezier
                 style={{
-                    borderRadius: 10,
+                    borderRadius: 12,
+                    display:'flex',
+                    justifyContent:'flex-start',
+                    alignItems:'flex-start'
+                    // margin:10
                 }}
                 decorator={toolTip}
                 onDataPointClick={handleClickOnDataPoint}
