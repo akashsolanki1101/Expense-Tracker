@@ -1,10 +1,13 @@
 import React from 'react'
 
 import {View,Text,StyleSheet,StatusBar} from 'react-native'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import Entypo from 'react-native-vector-icons/Entypo'
 
 import {useTheme} from '../ui/themeContext/themeContext'
 import {Chart} from '../chart/chart'
 import {TransactionCard} from '../cards/transactionCard/transactionCard'
+import {AddTransactionButton} from '../addTransactionButton/addTransactionButton'
 
 const useStyles=()=>{
     const theme = useTheme()
@@ -13,12 +16,15 @@ const useStyles=()=>{
             container:{
                 flex:1,
                 backgroundColor:theme.theme.primaryBackground,
-                paddingHorizontal:20,
+                paddingHorizontal:18,
                 paddingVertical:20
             },
             upperBlock:{
+                width:'100%',
                 // borderWidth:1,
-                // borderColor:'orange'
+                // borderColor:'orange',
+                flexDirection:'row',
+                justifyContent:'space-between',
             },
             helloText:{
                 color:theme.theme.secondaryText,
@@ -29,6 +35,13 @@ const useStyles=()=>{
                 color:theme.theme.primaryText,
                 fontSize:40,
                 fontWeight:'bold',
+            },
+            searchIconContainer:{
+                // borderWidth:2,
+                // borderColor:'red',
+                marginRight:10,
+                justifyContent:'space-between',
+                paddingVertical:4
             },
             middleBlock:{
                 width:'100%',
@@ -90,6 +103,10 @@ export const SpendingHomePage = ()=>{
                     <Text style={styles.helloText}>Hello,</Text>
                     <Text style={styles.nameText}>Akash</Text>
                 </View>
+                <View style={styles.searchIconContainer}>
+                    <Ionicons name='md-search' color={theme.theme.primaryText} size={23}/>
+                    <Entypo name='dots-three-vertical' color={theme.theme.primaryText} size={23}/>
+                </View>
             </View>
             <View style={styles.middleBlock}>
                 <View style={styles.statsContainer}>
@@ -114,6 +131,7 @@ export const SpendingHomePage = ()=>{
                 <TransactionCard/>
                 <TransactionCard/>
             </View>
+            <AddTransactionButton/>
         </View>
     )
 }

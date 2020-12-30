@@ -34,6 +34,14 @@ const useStyles = ()=>{
                 color:theme.theme.primaryText,
                 fontSize:16
             },
+            categoryImageContainer:{
+                position:'absolute',
+                bottom:0
+            },
+            categoryImage:{
+                width:100,
+                height:100,
+            },
             rightBlock:{
                 width:'30%',
                 justifyContent:'flex-end',   
@@ -58,7 +66,9 @@ const useStyles = ()=>{
 
 export const CategoryCard = ({categoryName,percent,imgUrl})=>{
     const styles = useStyles()
-    console.log(imgUrl);
+    const path = '../../../assets/img/categoryCard/fast-food.png'
+    const imageUrl = require(path)
+    console.log(imageUrl,typeof(path),typeof(imgUrl));
     return(
         <View style={{...styles.container,backgroundColor:Colors[categoryName].background}}>
             <View style={styles.leftBlock}>
@@ -67,7 +77,7 @@ export const CategoryCard = ({categoryName,percent,imgUrl})=>{
                     <Text style={styles.categorySpendingsPercent}>spent {percent}%</Text>
                 </View>
                 <View style={styles.categoryImageContainer}>
-                    <Image style={styles.categoryImage} source={require(imgUrl)}/>
+                    <Image style={styles.categoryImage} source={require('../../../assets/img/categoryCard/shopping.png')}/>
                 </View>
             </View>
             <View style={styles.rightBlock}>

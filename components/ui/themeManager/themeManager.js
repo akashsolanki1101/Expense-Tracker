@@ -5,6 +5,7 @@ import {Appearance, AppearanceProvider} from 'react-native-appearance'
 
 import {ThemeContext} from  '../themeContext/themeContext'
 import {dark} from '../theme/darkTheme'
+import {light} from '../theme/lightTheme'
 
 const ManageThemeProvider = ({children})=>{
     const [themeState,setThemeState] = useState('dark')

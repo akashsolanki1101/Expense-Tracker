@@ -33,6 +33,7 @@ export const Chart = ()=>{
             r: "6",
             strokeWidth: "5",
             stroke: "rgba(100,255,240,1)"
+            // stroke: "rgba(216,48,37,1)"
         },
     }
 
@@ -98,7 +99,7 @@ export const Chart = ()=>{
                         color:(opacity=1)=>`rgba(255,255,255,.8)`,
                     }]
                 }}
-                width={Dimensions.get("window").width-40} 
+                width={Dimensions.get("window").width-36} 
                 height={230}
                 yAxisLabel="₹ "
                 yAxisInterval={1}

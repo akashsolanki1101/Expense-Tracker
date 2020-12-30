@@ -18,7 +18,8 @@ const useStyles = ()=>{
                 paddingVertical:8,
                 flexDirection:'row',
                 alignItems:'center',
-                justifyContent:'space-between'
+                justifyContent:'space-between',
+                elevation:4
             },
             categoryIconContainer:{
                 backgroundColor:theme.theme.categoryIconBackground,
@@ -69,11 +70,15 @@ const useStyles = ()=>{
 
 export const TransactionCard = ()=>{
     const styles = useStyles()
+    const theme = useTheme()
+    const mode = theme.mode
+    const imageUrl = `../../../assets/img/transactionCard/fast-food-dark.png`
+
 
     return(
         <View style={styles.container}>
             <View style={styles.categoryIconContainer}>
-                <Image style={styles.categoryIcon} source={require('../../../assets/img/transactionCard/fast-food-dark.png')}/>
+                <Image style={styles.categoryIcon} source={require(imageUrl)}/>
             </View>
             <View style={styles.spendingInfoContainer}>
                 <View style={styles.spendingPlaceAndCategoryContainer}>
