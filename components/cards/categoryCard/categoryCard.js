@@ -66,9 +66,8 @@ const useStyles = ()=>{
 
 export const CategoryCard = ({categoryName,percent,imgUrl})=>{
     const styles = useStyles()
-    const path = '../../../assets/img/categoryCard/fast-food.png'
-    const imageUrl = require(path)
-    console.log(imageUrl,typeof(path),typeof(imgUrl));
+    console.log(imgUrl);
+
     return(
         <View style={{...styles.container,backgroundColor:Colors[categoryName].background}}>
             <View style={styles.leftBlock}>
@@ -77,7 +76,7 @@ export const CategoryCard = ({categoryName,percent,imgUrl})=>{
                     <Text style={styles.categorySpendingsPercent}>spent {percent}%</Text>
                 </View>
                 <View style={styles.categoryImageContainer}>
-                    <Image style={styles.categoryImage} source={require('../../../assets/img/categoryCard/shopping.png')}/>
+                    <Image style={styles.categoryImage} source={imgUrl}/>
                 </View>
             </View>
             <View style={styles.rightBlock}>

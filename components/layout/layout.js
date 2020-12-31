@@ -6,7 +6,7 @@ import {NavigationContainer} from '@react-navigation/native'
 import changeNavigationBarColor from 'react-native-navigation-bar-color'
 
 import {SpendingHomePage} from '../spendings/spendingHomePage'
-import {TabNavigator} from '../../navigation/navigation'
+import {StackNavigator} from '../../navigation/navigation'
 import {useTheme} from '../ui/themeContext/themeContext'
 
 const useStyles = ()=>{
@@ -43,7 +43,7 @@ export const Layout = ()=>{
         <View style={styles.container}>
             <StatusBar barStyle={theme.mode==='dark'?'light-content':'dark-content'} backgroundColor={theme.theme.primaryBackground}/>
             <NavigationContainer>
-                <TabNavigator/>
+                <StackNavigator/>
             </NavigationContainer>       
         </View>
     )

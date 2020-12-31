@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 
 import {View,StyleSheet,Dimensions} from 'react-native'
 import {LineChart} from 'react-native-chart-kit'
+import { spring } from 'react-native-reanimated'
 import { Rect, Text as TextSVG, Svg } from "react-native-svg"
 
 const useStyles = ()=>{
@@ -108,6 +109,8 @@ export const Chart = ()=>{
                 withInnerLines={false}
                 withOuterLines={false}
                 bezier
+                yLabelsOffset={20}
+                xLabelsOffset={5}
                 style={{
                     borderRadius: 12,
                     display:'flex',

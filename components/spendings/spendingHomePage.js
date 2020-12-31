@@ -1,13 +1,13 @@
-import React from 'react'
+import React,{useState} from 'react'
 
-import {View,Text,StyleSheet,StatusBar} from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import {View,Text,StyleSheet,TouchableNativeFeedback} from 'react-native'
 import Entypo from 'react-native-vector-icons/Entypo'
 
 import {useTheme} from '../ui/themeContext/themeContext'
 import {Chart} from '../chart/chart'
 import {TransactionCard} from '../cards/transactionCard/transactionCard'
 import {AddTransactionButton} from '../addTransactionButton/addTransactionButton'
+import {PopUp} from '../popUp/popUp'
 
 const useStyles=()=>{
     const theme = useTheme()
@@ -27,6 +27,8 @@ const useStyles=()=>{
                 justifyContent:'space-between',
             },
             helloText:{
+                // borderWidth:1,
+                // borderColor:'orange',
                 color:theme.theme.secondaryText,
                 fontSize:25,
                 fontWeight:'normal'
@@ -36,12 +38,12 @@ const useStyles=()=>{
                 fontSize:40,
                 fontWeight:'bold',
             },
-            searchIconContainer:{
+            menuButtonContainer:{
                 // borderWidth:2,
                 // borderColor:'red',
                 marginRight:10,
                 justifyContent:'space-between',
-                paddingVertical:4
+                paddingVertical:12
             },
             middleBlock:{
                 width:'100%',
@@ -92,46 +94,72 @@ const useStyles=()=>{
     )
 }
 
-export const SpendingHomePage = ()=>{
+export const SpendingHomePage = ({navigation})=>{
     const styles = useStyles()
     const theme = useTheme()
 
+    // console.log(props);
+
+    const [showMenuPopUp,setShowMenuPopUp] = useState(false)
+
+    const handleShowMenu = ()=>{
+        setShowMenuPopUp(true)
+    }
+
+    const handleHideMenu = ()=>{
+        setShowMenuPopUp(false)
+    }
+
     return (
-        <View style={styles.container}>
-            <View style={styles.upperBlock}>
-                <View style={styles.textContainer}>
-                    <Text style={styles.helloText}>Hello,</Text>
-                    <Text style={styles.nameText}>Akash</Text>
-                </View>
-                <View style={styles.searchIconContainer}>
-                    <Ionicons name='md-search' color={theme.theme.primaryText} size={23}/>
-                    <Entypo name='dots-three-vertical' color={theme.theme.primaryText} size={23}/>
-                </View>
-            </View>
-            <View style={styles.middleBlock}>
-                <View style={styles.statsContainer}>
-                    <View style={styles.amountContainer}>
-                        <Text style={styles.amountText}>₹ 1,673.80</Text>
-                        <Text style={styles.durationText}>spent during this period</Text>
+        <TouchableNativeFeedback
+            onPress={handleHideMenu}
+        >
+            <View style={styles.container}>
+                <View style={styles.upperBlock}>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.helloText}>Hello,</Text>
+                        <Text style={styles.nameText}>Akash</Text>
                     </View>
-                    <View style={styles.statisticsTextContainer}>
-                        <Text style={styles.statisticsText}>Statistics</Text>
+                    <View style={styles.menuButtonContainer}>
+                        <TouchableNativeFeedback
+                            onPress={handleShowMenu}
+                        >
+                            <Entypo name='dots-three-vertical' color={theme.theme.primaryText} size={21}/>
+                        </TouchableNativeFeedback>
                     </View>
                 </View>
-                <View style={styles.chartContainer}>
-                    <Chart/>
-                </View>
-            </View>
-            <View style={styles.lowerBlock}>
-                <View style={styles.transactionsContainer}>
-                    <View style={styles.transactionsTextContainer}>
-                        <Text style={styles.transactionsText}>Transactions</Text>
+                <View style={styles.middleBlock}>
+                    <View style={styles.statsContainer}>
+                        <View style={styles.amountContainer}>
+                            <Text style={styles.amountText}>₹ 1,673.80</Text>
+                            <Text style={styles.durationText}>spent during this period</Text>
+                        </View>
+                        <View style={styles.statisticsTextContainer}>
+                            <Text style={styles.statisticsText}>Statistics</Text>
+                        </View>
+                    </View>
+                    <View style={styles.chartContainer}>
+                        <Chart/>
                     </View>
                 </View>
-                <TransactionCard/>
-                <TransactionCard/>
+                <View style={styles.lowerBlock}>
+                    <View style={styles.transactionsContainer}>
+                        <View style={styles.transactionsTextContainer}>
+                            <Text style={styles.transactionsText}>Transactions</Text>
+                        </View>
+                    </View>
+                    <TransactionCard/>
+                    <TransactionCard/>
+                </View>
+                <AddTransactionButton/>
+                {
+                    showMenuPopUp&&
+                    <PopUp 
+                        navigation={navigation}
+                        hideMenu={handleHideMenu}
+                    />
+                }
             </View>
-            <AddTransactionButton/>
-        </View>
+        </TouchableNativeFeedback>
     )
 }
