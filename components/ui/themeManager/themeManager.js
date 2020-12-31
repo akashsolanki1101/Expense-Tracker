@@ -22,12 +22,18 @@ const ManageThemeProvider = ({children})=>{
     useEffect(()=>{
         const subscription = Appearance.addChangeListener(({colorScheme})=>{
             setThemeState(colorScheme)
+            console.log(colorScheme);
+            if(colorScheme==='dark'){
+                setTheme(dark.theme)
+            }else{
+                setTheme(light.theme)
+            }
         })
         return ()=> subscription.remove()
     },[])
 
 return(
-    <ThemeContext.Provider value={{mode:themeState,setMode,theme:theme,toggleTheme}}>
+    <ThemeContext.Provider value={{mode:themeState,setMode:setMode,theme:theme,setTheme:toggleTheme}}>
         <StatusBar barStyle={themeState==='dark'?'light-content':'dark-content'} backgroundColor={themeState==='dark'?'#000':'#fff'}/>
         {children}
     </ThemeContext.Provider>

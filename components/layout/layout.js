@@ -19,8 +19,6 @@ const useStyles = ()=>{
     )
 }
 
-
-
 export const Layout = ()=>{
     const styles = useStyles()
     const theme = useTheme()
@@ -32,7 +30,7 @@ export const Layout = ()=>{
         }catch(e){
             console.log(e);
         }
-    },[])
+    },[theme])
 
     useEffect(()=>{
         changeColor()

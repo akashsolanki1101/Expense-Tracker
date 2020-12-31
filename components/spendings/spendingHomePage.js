@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 
-import {View,Text,StyleSheet,TouchableNativeFeedback} from 'react-native'
+import {View,Text,StyleSheet,TouchableNativeFeedback,TouchableWithoutFeedback} from 'react-native'
 import Entypo from 'react-native-vector-icons/Entypo'
 
 import {useTheme} from '../ui/themeContext/themeContext'
@@ -111,7 +111,7 @@ export const SpendingHomePage = ({navigation})=>{
     }
 
     return (
-        <TouchableNativeFeedback
+        <TouchableWithoutFeedback
             onPress={handleHideMenu}
         >
             <View style={styles.container}>
@@ -160,6 +160,6 @@ export const SpendingHomePage = ({navigation})=>{
                     />
                 }
             </View>
-        </TouchableNativeFeedback>
+        </TouchableWithoutFeedback>
     )
 }
