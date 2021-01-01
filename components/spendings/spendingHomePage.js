@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 
-import {View,Text,StyleSheet,TouchableNativeFeedback,TouchableWithoutFeedback} from 'react-native'
+import {View,Text,StyleSheet,TouchableNativeFeedback,TouchableWithoutFeedback,ScrollView,FlatList} from 'react-native'
 import Entypo from 'react-native-vector-icons/Entypo'
 
 import {useTheme} from '../ui/themeContext/themeContext'
@@ -17,18 +17,17 @@ const useStyles=()=>{
                 flex:1,
                 backgroundColor:theme.theme.primaryBackground,
                 paddingHorizontal:18,
-                paddingVertical:20
             },
             upperBlock:{
                 width:'100%',
-                // borderWidth:1,
-                // borderColor:'orange',
+            },
+            upperBlock1:{
+                width:'100%',
                 flexDirection:'row',
                 justifyContent:'space-between',
+                paddingTop:10
             },
             helloText:{
-                // borderWidth:1,
-                // borderColor:'orange',
                 color:theme.theme.secondaryText,
                 fontSize:25,
                 fontWeight:'normal'
@@ -39,20 +38,18 @@ const useStyles=()=>{
                 fontWeight:'bold',
             },
             menuButtonContainer:{
-                // borderWidth:2,
-                // borderColor:'red',
                 marginRight:10,
                 justifyContent:'space-between',
                 paddingVertical:12
             },
             middleBlock:{
                 width:'100%',
-                marginTop:10
             },
             statsContainer:{
                 width:'100%',
                 flexDirection:'row',
-                justifyContent:'space-between'
+                justifyContent:'space-between',
+                marginTop:10
             },
             amountContainer:{},
             amountText:{
@@ -79,16 +76,16 @@ const useStyles=()=>{
                 shadowColor:'#fff'
             },
             lowerBlock:{
-                // borderWidth:1,
-                // borderColor:'white',
+                marginTop:5,
+                flex:1,
+            },
+            transactionsContainer:{
                 marginTop:15,
             },
-            transactionsContainer:{},
-            transactionsTextContainer:{},
             transactionsText:{
                 color:theme.theme.primaryText,
                 fontSize:22,
-                fontWeight:'bold'
+                fontWeight:'bold',
             },
         })
     )
@@ -97,8 +94,34 @@ const useStyles=()=>{
 export const SpendingHomePage = ({navigation})=>{
     const styles = useStyles()
     const theme = useTheme()
+    const [title,setTitle] = useState('Statistics')
 
-    // console.log(props);
+    const list = [
+        {
+            categoryName:'Fast Food',
+            placeName:'Babaji',
+            amount:1200,
+            date:'11/01/2021'
+        },
+        {
+            categoryName:'Bills',
+            placeName:'Electricity',
+            amount:900,
+            date:'02/01/2021'
+        },
+        {
+            categoryName:'Clothing',
+            placeName:'Leather Jacket',
+            amount:2400,
+            date:'31/12/2020'
+        },
+        {
+            categoryName:'Kids',
+            placeName:'Cricket Bat',
+            amount:600,
+            date:'10/11/2020'
+        },
+    ]
 
     const [showMenuPopUp,setShowMenuPopUp] = useState(false)
 
@@ -110,46 +133,74 @@ export const SpendingHomePage = ({navigation})=>{
         setShowMenuPopUp(false)
     }
 
+    const handleScroll = (event)=>{
+        if(event.nativeEvent.contentOffset.y>280){
+            setTitle('Transactions')
+        }else if(event.nativeEvent.contentOffset.y<280){
+            setTitle('Statistics')
+        }
+        // console.log(event.nativeEvent);
+    }
+
+    const listHeaderComp = (
+        <View style={styles.middleBlock}>
+            <View style={styles.chartContainer}>
+                <Chart/>
+            </View>
+            <View style={styles.transactionsContainer}>
+                <View style={styles.transactionsTextContainer}>
+                    <Text style={styles.transactionsText}>Transactions</Text>
+                </View>
+            </View>
+        </View>
+    )
+
     return (
         <TouchableWithoutFeedback
             onPress={handleHideMenu}
         >
             <View style={styles.container}>
                 <View style={styles.upperBlock}>
-                    <View style={styles.textContainer}>
-                        <Text style={styles.helloText}>Hello,</Text>
-                        <Text style={styles.nameText}>Akash</Text>
+                    <View style={styles.upperBlock1}>
+                        <View style={styles.textContainer}>
+                            <Text style={styles.helloText}>Hello,</Text>
+                            <Text style={styles.nameText}>Akash</Text>
+                        </View>
+                        <View style={styles.menuButtonContainer}>
+                            <TouchableNativeFeedback
+                                onPress={handleShowMenu}
+                            >
+                                <Entypo name='dots-three-vertical' color={theme.theme.primaryText} size={21}/>
+                            </TouchableNativeFeedback>
+                        </View>
                     </View>
-                    <View style={styles.menuButtonContainer}>
-                        <TouchableNativeFeedback
-                            onPress={handleShowMenu}
-                        >
-                            <Entypo name='dots-three-vertical' color={theme.theme.primaryText} size={21}/>
-                        </TouchableNativeFeedback>
-                    </View>
-                </View>
-                <View style={styles.middleBlock}>
                     <View style={styles.statsContainer}>
                         <View style={styles.amountContainer}>
                             <Text style={styles.amountText}>₹ 1,673.80</Text>
                             <Text style={styles.durationText}>spent during this period</Text>
                         </View>
                         <View style={styles.statisticsTextContainer}>
-                            <Text style={styles.statisticsText}>Statistics</Text>
+                            <Text style={styles.statisticsText}>{title}</Text>
                         </View>
-                    </View>
-                    <View style={styles.chartContainer}>
-                        <Chart/>
                     </View>
                 </View>
                 <View style={styles.lowerBlock}>
-                    <View style={styles.transactionsContainer}>
-                        <View style={styles.transactionsTextContainer}>
-                            <Text style={styles.transactionsText}>Transactions</Text>
-                        </View>
-                    </View>
-                    <TransactionCard/>
-                    <TransactionCard/>
+                    <FlatList
+                        keyExtractor={item=>item.date}
+                        data={list}
+                        renderItem={({item})=>{
+                            return(
+                                <TransactionCard
+                                    categoryName={item.categoryName}
+                                    amount={item.amount}
+                                    placeName={item.placeName}
+                                    date={item.date}
+                                />
+                            )
+                        }}
+                        ListHeaderComponent={listHeaderComp}
+                        onScroll={handleScroll}
+                    />
                 </View>
                 <AddTransactionButton/>
                 {

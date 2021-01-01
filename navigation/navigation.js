@@ -11,6 +11,7 @@ import {IncomeHomePage} from "../components/income/incomeHomePage"
 import {AnalysisPage} from '../components/analysis/analysis'
 import {CategoriesPage} from '../components/categories/categories'
 import {SettingsPage} from '../components/settings/settings'
+import {CategoryPage} from '../components/category/category'
 import {useTheme} from '../components/ui/themeContext/themeContext'
 
 const Stack = createStackNavigator()
@@ -85,13 +86,28 @@ export const StackNavigator = ()=>{
                     },
                     headerBackImage:()=><AntDesign name="left" size={22} color={theme.theme.primaryText}/>
                 }}
-            /><Stack.Screen
+            />
+            <Stack.Screen
                 name="Settings"
                 component={SettingsPage}
                 options={{
                     headerStyle:{
                         backgroundColor:theme.theme.primaryBackground,
                     },
+                    headerTitleStyle:{
+                        color:theme.theme.primaryText,
+                    },
+                    headerBackImage:()=><AntDesign name="left" size={22} color={theme.theme.primaryText}/>
+                }}
+            />
+            <Stack.Screen
+                name="Category"
+                component={CategoryPage}
+                options={{
+                    headerStyle:{
+                        backgroundColor:theme.theme.primaryBackground,
+                    },
+                    headerTitle:' ',
                     headerTitleStyle:{
                         color:theme.theme.primaryText,
                     },

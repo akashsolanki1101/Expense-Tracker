@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {View,Text,StyleSheet,Image} from 'react-native'
+import {View,Text,StyleSheet,Image,TouchableNativeFeedback} from 'react-native'
 
 import {useTheme} from '../../ui/themeContext/themeContext'
 import {CategoriesItemsData} from '../../../data/categoriesItemsData/categoriesItemsData'
@@ -10,9 +10,9 @@ const useStyles = ()=>{
     return(
         StyleSheet.create({
             container:{
-                width:'100%',
+                width:'90%',
                 height:250,
-                borderRadius:15,
+                borderRadius:20,
                 flexDirection:'row',
                 overflow:'hidden',
                 paddingVertical:10,
@@ -36,11 +36,10 @@ const useStyles = ()=>{
             categoryImageContainer:{
                 position:'absolute',
                 bottom:0,
-                left:-20
             },
             categoryImage:{
-                width:100,
-                height:100,
+                width:120,
+                height:120,
             },
             rightBlock:{
                 width:'30%',
@@ -62,25 +61,29 @@ const useStyles = ()=>{
     )
 }
 
-export const CategoryCard = ({categoryName,style})=>{
+export const CategoryCard = ({categoryName,style,style1,onClick})=>{
     const styles = useStyles()
 
     return(
-        <View style={{...styles.container,backgroundColor:CategoriesItemsData[categoryName].background,...style}}>
-            <View style={styles.leftBlock}>
-                <View style={styles.categoryNameContainer}>
-                    <Text style={styles.categoryNameText}>{categoryName}</Text>
-                    <Text style={styles.categorySpendingsPercent}>spent 48%</Text>
+        <TouchableNativeFeedback
+            onPress={()=>onClick(categoryName)}
+        >
+            <View style={{...styles.container,...style,backgroundColor:CategoriesItemsData[categoryName].background}}>
+                <View style={styles.leftBlock}>
+                    <View style={styles.categoryNameContainer}>
+                        <Text style={styles.categoryNameText}>{categoryName}</Text>
+                        <Text style={styles.categorySpendingsPercent}>spent 48%</Text>
+                    </View>
+                    <View style={styles.categoryImageContainer}>
+                        <Image style={{...styles.categoryImage,...style1}} source={CategoriesItemsData[categoryName].imgUrl}/>
+                    </View>
                 </View>
-                <View style={styles.categoryImageContainer}>
-                    <Image style={styles.categoryImage} source={CategoriesItemsData[categoryName].imgUrl}/>
+                <View style={styles.rightBlock}>
+                    <View style={{...styles.percentageBarBackground,backgroundColor:CategoriesItemsData[categoryName].percentageBar1}}>
+                        <View style={{...styles.percentageBarForeground,backgroundColor:CategoriesItemsData[categoryName].percentageBar2,height:`48%`}}></View>
+                    </View>
                 </View>
             </View>
-            <View style={styles.rightBlock}>
-                <View style={{...styles.percentageBarBackground,backgroundColor:CategoriesItemsData[categoryName].percentageBar1}}>
-                    <View style={{...styles.percentageBarForeground,backgroundColor:CategoriesItemsData[categoryName].percentageBar2,height:`48%`}}></View>
-                </View>
-            </View>
-        </View>
+        </TouchableNativeFeedback>
     )
 }

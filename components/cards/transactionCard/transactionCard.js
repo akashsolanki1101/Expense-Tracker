@@ -3,6 +3,7 @@ import React from 'react'
 import {View,Text,StyleSheet,Image} from 'react-native'
 
 import {useTheme} from "../../ui/themeContext/themeContext"
+import {CategoriesItemsData} from '../../../data/categoriesItemsData/categoriesItemsData'
 
 const useStyles = ()=>{
     const theme = useTheme()
@@ -68,33 +69,33 @@ const useStyles = ()=>{
     )
 }
 
-export const TransactionCard = ()=>{
+export const TransactionCard = ({categoryName,placeName,amount,date})=>{
     const styles = useStyles()
     const theme = useTheme()
     const mode = theme.mode
-    const imageUrl = `../../../assets/img/transactionCard/fast-food-dark.png`
+    const imageUrl = mode==='dark'?CategoriesItemsData[categoryName].iconDark:CategoriesItemsData[categoryName].iconLight
 
 
     return(
         <View style={styles.container}>
             <View style={styles.categoryIconContainer}>
-                <Image style={styles.categoryIcon} source={require(imageUrl)}/>
+                <Image style={styles.categoryIcon} source={imageUrl}/>
             </View>
             <View style={styles.spendingInfoContainer}>
                 <View style={styles.spendingPlaceAndCategoryContainer}>
                     <View style={styles.placeNameContainer}> 
-                        <Text style={styles.placeNameText}>Babaji</Text>
+                        <Text style={styles.placeNameText}>{placeName}</Text>
                     </View>
                     <View style={styles.categoryNameContainer}> 
-                        <Text style={styles.categoryName}>Fast Food</Text>
+                        <Text style={styles.categoryName}>{categoryName}</Text>
                     </View>
                 </View>
                 <View style={styles.amountAndDateContainer}>
                     <View style={styles.amountContainer}>
-                        <Text style={styles.amountText}>₹ 1500</Text>
+                        <Text style={styles.amountText}>₹ {amount}</Text>
                     </View>
                     <View style={styles.dateContainer}>
-                        <Text style={styles.dateText}>11/01/2021</Text>
+                        <Text style={styles.dateText}>{date}</Text>
                     </View>
                 </View>
             </View>

@@ -16,22 +16,30 @@ const useStyles = ()=>{
             },
             categoriesListContainer:{
                 width:'100%',
-                // borderWidth:1,
-                // borderColor:'white',
                 paddingVertical:10,
                 paddingHorizontal:10
             },
             categoryCardStyle:{
-                width:150,
-                marginHorizontal:10
+                width:165,
+                marginHorizontal:8
+            },
+            categoryIconStyle:{
+                width:80,
+                height:80
             }
         })
     )
 }
 
-export const CategoriesPage = ()=>{
-
+export const CategoriesPage = ({navigation})=>{
     const styles = useStyles()
+
+    handleCategoryCardClick = (categoryName)=>{
+        navigation.navigate('Category',{
+            categoryName:categoryName
+        })
+    }
+
     return(
         <View style={styles.container}>
             <View style={styles.categoriesListContainer}>
@@ -45,6 +53,8 @@ export const CategoriesPage = ()=>{
                             <CategoryCard
                                 categoryName={item}
                                 style={styles.categoryCardStyle}
+                                style1={styles.categoryIconStyle}
+                                onClick={handleCategoryCardClick}
                             />
                         )
                     }}

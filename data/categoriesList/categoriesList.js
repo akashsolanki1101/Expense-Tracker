@@ -6,7 +6,7 @@ export const CategoriesList = [
     'Kids',
     'Personal Care',
     'Phone',
-    'Taxi',
+    'Transportation',
     'Others'
 ]
 
