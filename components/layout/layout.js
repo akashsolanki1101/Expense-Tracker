@@ -5,7 +5,6 @@ import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native'
 import changeNavigationBarColor from 'react-native-navigation-bar-color'
 
-import {SpendingHomePage} from '../spendings/spendingHomePage'
 import {StackNavigator} from '../../navigation/navigation'
 import {useTheme} from '../ui/themeContext/themeContext'
 

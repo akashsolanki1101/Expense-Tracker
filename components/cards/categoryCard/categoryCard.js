@@ -3,7 +3,7 @@ import React from 'react'
 import {View,Text,StyleSheet,Image} from 'react-native'
 
 import {useTheme} from '../../ui/themeContext/themeContext'
-import {Colors} from '../../ui/colors/colors'
+import {CategoriesItemsData} from '../../../data/categoriesItemsData/categoriesItemsData'
 
 const useStyles = ()=>{
     const theme = useTheme()
@@ -11,8 +11,7 @@ const useStyles = ()=>{
         StyleSheet.create({
             container:{
                 width:'100%',
-                // backgroundColor:Colors.groceryCard.background,
-                height:210,
+                height:250,
                 borderRadius:15,
                 flexDirection:'row',
                 overflow:'hidden',
@@ -27,7 +26,7 @@ const useStyles = ()=>{
             },
             categoryNameText:{
                 color:theme.theme.primaryText,
-                fontSize:30,
+                fontSize:25,
                 fontWeight:'bold'
             },  
             categorySpendingsPercent:{
@@ -36,7 +35,8 @@ const useStyles = ()=>{
             },
             categoryImageContainer:{
                 position:'absolute',
-                bottom:0
+                bottom:0,
+                left:-20
             },
             categoryImage:{
                 width:100,
@@ -51,37 +51,34 @@ const useStyles = ()=>{
             percentageBarBackground:{
                 width:'14%',
                 height:'100%',
-                // backgroundColor:Colors.groceryCard.percentageBar1,
                 borderRadius:10,
                 justifyContent:'flex-end'
             },
             percentageBarForeground:{
                 width:'100%',
-                // backgroundColor:Colors.groceryCard.percentageBar2,
                 borderRadius:10,
             }
         })
     )
 }
 
-export const CategoryCard = ({categoryName,percent,imgUrl})=>{
+export const CategoryCard = ({categoryName,style})=>{
     const styles = useStyles()
-    console.log(imgUrl);
 
     return(
-        <View style={{...styles.container,backgroundColor:Colors[categoryName].background}}>
+        <View style={{...styles.container,backgroundColor:CategoriesItemsData[categoryName].background,...style}}>
             <View style={styles.leftBlock}>
                 <View style={styles.categoryNameContainer}>
                     <Text style={styles.categoryNameText}>{categoryName}</Text>
-                    <Text style={styles.categorySpendingsPercent}>spent {percent}%</Text>
+                    <Text style={styles.categorySpendingsPercent}>spent 48%</Text>
                 </View>
                 <View style={styles.categoryImageContainer}>
-                    <Image style={styles.categoryImage} source={imgUrl}/>
+                    <Image style={styles.categoryImage} source={CategoriesItemsData[categoryName].imgUrl}/>
                 </View>
             </View>
             <View style={styles.rightBlock}>
-                <View style={{...styles.percentageBarBackground,backgroundColor:Colors[categoryName].percentageBar1}}>
-                    <View style={{...styles.percentageBarForeground,backgroundColor:Colors[categoryName].percentageBar2,height:`${percent}%`}}></View>
+                <View style={{...styles.percentageBarBackground,backgroundColor:CategoriesItemsData[categoryName].percentageBar1}}>
+                    <View style={{...styles.percentageBarForeground,backgroundColor:CategoriesItemsData[categoryName].percentageBar2,height:`48%`}}></View>
                 </View>
             </View>
         </View>

@@ -1,8 +1,10 @@
 import React from 'react'
 
-import {View,Text,StyleSheet} from 'react-native'
+import {View,Text,StyleSheet,FlatList} from 'react-native'
 
 import {useTheme} from '../ui/themeContext/themeContext'
+import {CategoryCard} from '../cards/categoryCard/categoryCard'
+import {CategoriesList} from '../../data/categoriesList/categoriesList'
 
 const useStyles = ()=>{
     const theme = useTheme()
@@ -12,18 +14,43 @@ const useStyles = ()=>{
                 flex:1,
                 backgroundColor:theme.theme.primaryBackground
             },
-            textAkash:{
-                color:theme.theme.primaryText,
-                fontSize:20
+            categoriesListContainer:{
+                width:'100%',
+                // borderWidth:1,
+                // borderColor:'white',
+                paddingVertical:10,
+                paddingHorizontal:10
+            },
+            categoryCardStyle:{
+                width:150,
+                marginHorizontal:10
             }
         })
     )
 }
 
 export const CategoriesPage = ()=>{
+
     const styles = useStyles()
     return(
         <View style={styles.container}>
+            <View style={styles.categoriesListContainer}>
+            {
+                    <FlatList
+                    keyExtractor={item=>item}
+                    data={CategoriesList}
+                    horizontal={true}
+                    renderItem={({item})=>{
+                        return(
+                            <CategoryCard
+                                categoryName={item}
+                                style={styles.categoryCardStyle}
+                            />
+                        )
+                    }}
+                />
+            }
+            </View>
         </View>
     )
 }
