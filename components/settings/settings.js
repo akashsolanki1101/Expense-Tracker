@@ -3,9 +3,11 @@ import React,{useState} from 'react'
 import {View,Text,StyleSheet,TouchableNativeFeedback} from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import {useSelector} from 'react-redux'
 
 import {useTheme} from '../ui/themeContext/themeContext'
 import {SelectThemeDropDown} from '../selectThemeDropDown/selectThemeDropDown'
+import {NameInput} from '../userNameInput/userNameInput'
 
 const useStyles = ()=>{
     const theme = useTheme()
@@ -74,9 +76,11 @@ const useStyles = ()=>{
 export const SettingsPage = ()=>{
     const theme = useTheme()
     const styles = useStyles()
+    const themeFormat = useSelector(state=>state.user.themeFormat)
+    const userName = useSelector(state=>state.user.name)
 
     const [showThemeSelector,setShowThemeSelector] = useState(false)
-    const [themeMode,setThemeMode] = useState('Dark')
+    const [showNameEditor,setShowNameEditor] = useState(false)
 
     const handleOpenThemeSelector =()=>{
         setShowThemeSelector(true)
@@ -86,9 +90,14 @@ export const SettingsPage = ()=>{
         setShowThemeSelector(false)
     }
 
-    const handleChangeInThemeMode = (_themeMode)=>{
-        setThemeMode(_themeMode)
+    const handleOpenNameEditor=()=>{
+        setShowNameEditor(true)
     }
+
+    const handleCloseNameEditor=()=>{
+        setShowNameEditor(false)
+    }
+
 
     return(
         <View style={styles.container}>
@@ -106,12 +115,12 @@ export const SettingsPage = ()=>{
                     </View>
                     <View style={styles.themeButtonTextContainer}>
                         <Text style={styles.themeButtonText}>Theme</Text>
-                        <Text style={styles.themeModeText}>{themeMode}</Text>
+                        <Text style={styles.themeModeText}>{themeFormat}</Text>
                     </View>
                 </View>
             </TouchableNativeFeedback>
             <TouchableNativeFeedback
-                onPress={()=>{}}
+                onPress={handleOpenNameEditor}
                 background={TouchableNativeFeedback.Ripple(theme.theme.secondaryText)}
             >
                 <View style={styles.nameButtonContainer}>
@@ -120,7 +129,7 @@ export const SettingsPage = ()=>{
                     </View>
                     <View style={styles.nameButtonTextContainer}>
                         <Text style={styles.nameButtonText}>Name</Text>
-                        <Text style={styles.nameText}>Akash</Text>
+                        <Text style={styles.nameText}>{userName}</Text>
                     </View>
                 </View>
             </TouchableNativeFeedback>
@@ -132,7 +141,12 @@ export const SettingsPage = ()=>{
                 showThemeSelector&&
                 <SelectThemeDropDown
                     closeDropDown={handleCloseThemeSelector}
-                    changeThemeMode={handleChangeInThemeMode}
+                />
+            }
+            {
+                showNameEditor&&
+                <NameInput
+                    closeEditor={handleCloseNameEditor}
                 />
             }
         </View>

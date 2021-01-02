@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 
 import {View,Text,StyleSheet,TouchableNativeFeedback,TouchableWithoutFeedback,ScrollView,FlatList} from 'react-native'
 import Entypo from 'react-native-vector-icons/Entypo'
+import {useSelector} from 'react-redux'
 
 import {useTheme} from '../ui/themeContext/themeContext'
 import {Chart} from '../chart/chart'
@@ -95,6 +96,7 @@ export const SpendingHomePage = ({navigation})=>{
     const styles = useStyles()
     const theme = useTheme()
     const [title,setTitle] = useState('Statistics')
+    const userName = useSelector(state=>state.user.name)
 
     const list = [
         {
@@ -164,7 +166,7 @@ export const SpendingHomePage = ({navigation})=>{
                     <View style={styles.upperBlock1}>
                         <View style={styles.textContainer}>
                             <Text style={styles.helloText}>Hello,</Text>
-                            <Text style={styles.nameText}>Akash</Text>
+                            <Text style={styles.nameText}>{userName}</Text>
                         </View>
                         <View style={styles.menuButtonContainer}>
                             <TouchableNativeFeedback

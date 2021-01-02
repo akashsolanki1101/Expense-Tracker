@@ -12,7 +12,8 @@ const useStyles = ()=>{
             container:{
                 flex:1,
                 backgroundColor:theme.theme.primaryBackground,
-                alignItems:'center'
+                alignItems:'center',
+                paddingVertical:15
             },
             categoryName:{
                 color:theme.theme.primaryText
@@ -29,6 +30,7 @@ export const CategoryPage = ({route})=>{
         <View style={styles.container}>
             <CategoryCard
                     categoryName={categoryName}
+                    onClick={()=>{}}
             />
         </View>
     )
