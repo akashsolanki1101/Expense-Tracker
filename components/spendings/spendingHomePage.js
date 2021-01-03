@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 
-import {View,Text,StyleSheet,TouchableNativeFeedback,TouchableWithoutFeedback,ScrollView,FlatList} from 'react-native'
+import {View,Text,StyleSheet,TouchableNativeFeedback,TouchableWithoutFeedback,FlatList,Modal} from 'react-native'
 import Entypo from 'react-native-vector-icons/Entypo'
 import {useSelector} from 'react-redux'
 
@@ -9,6 +9,7 @@ import {Chart} from '../chart/chart'
 import {TransactionCard} from '../cards/transactionCard/transactionCard'
 import {AddTransactionButton} from '../addTransactionButton/addTransactionButton'
 import {PopUp} from '../popUp/popUp'
+import {AddTransactionPage} from '../addTransactionPage/addTransactionPage'
 
 const useStyles=()=>{
     const theme = useTheme()
@@ -96,8 +97,11 @@ export const SpendingHomePage = ({navigation})=>{
     const styles = useStyles()
     const theme = useTheme()
     const [title,setTitle] = useState('Statistics')
+    const [openModal,setOpenModal] = useState(false)
+    const [showMenuPopUp,setShowMenuPopUp] = useState(false)
     const userName = useSelector(state=>state.user.name)
 
+    
     const list = [
         {
             categoryName:'Fast Food',
@@ -125,8 +129,6 @@ export const SpendingHomePage = ({navigation})=>{
         },
     ]
 
-    const [showMenuPopUp,setShowMenuPopUp] = useState(false)
-
     const handleShowMenu = ()=>{
         setShowMenuPopUp(true)
     }
@@ -135,13 +137,20 @@ export const SpendingHomePage = ({navigation})=>{
         setShowMenuPopUp(false)
     }
 
+    const handleOpenModal = ()=>{
+        setOpenModal(true)
+    }
+
+    const handleCloseModal = ()=>{
+        setOpenModal(false)
+    }
+
     const handleScroll = (event)=>{
         if(event.nativeEvent.contentOffset.y>280){
             setTitle('Transactions')
         }else if(event.nativeEvent.contentOffset.y<280){
             setTitle('Statistics')
         }
-        // console.log(event.nativeEvent);
     }
 
     const listHeaderComp = (
@@ -204,7 +213,16 @@ export const SpendingHomePage = ({navigation})=>{
                         onScroll={handleScroll}
                     />
                 </View>
-                <AddTransactionButton/>
+                <AddTransactionButton
+                    click={handleOpenModal}
+                />
+                <Modal
+                    visible={openModal}
+                >
+                    <AddTransactionPage
+                        closeModal={handleCloseModal}
+                    />
+                </Modal>
                 {
                     showMenuPopUp&&
                     <PopUp 

@@ -31,19 +31,19 @@ export const HomeNavigator = ()=>{
             }}
         >
             <Tab.Screen
-                name="Spendings"
+                name="Expense"
                 component={SpendingHomePage}
                 options={{
-                    tabBarIcon:({color})=>(<FontAwesome name="minus" size={20} color={color}/>),
-                    tabBarLabel:({color})=>(<Text style={{color:color}}>Spendings</Text>)
+                    tabBarIcon:({color})=>(<AntDesign name="upcircleo" size={18} color={color}/>),
+                    tabBarLabel:({color})=>(<Text style={{color:color}}>Expense</Text>)
                 }}
             />
             <Tab.Screen
                 name="Income"
                 component={IncomeHomePage}
                 options={{
-                    tabBarIcon:({color})=>(<FontAwesome name="plus" size={20} color={color}/>),
-                    tabBarLabel:({color})=>(<Text style={{color:color}}>Incomes</Text>)
+                    tabBarIcon:({color})=>(<AntDesign name="downcircleo" size={18} color={color}/>),
+                    tabBarLabel:({color})=>(<Text style={{color:color}}>Income</Text>)
                 }}
             />
         </Tab.Navigator>
