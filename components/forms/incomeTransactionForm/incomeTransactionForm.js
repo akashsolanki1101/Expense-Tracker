@@ -15,7 +15,7 @@ const useStyles = ()=>{
     )
 }
 
-const IncomeTransactionForm = ()=>{
+export const IncomeTransactionForm = ()=>{
     const styles = useStyles()
 
     return(
