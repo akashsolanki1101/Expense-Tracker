@@ -6,6 +6,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import {useTheme} from '../ui/themeContext/themeContext'
 import {ExpenseTransactionForm} from '../forms/expenseTransactionForm/expenseTransactionForm'
 import {IncomeTransactionForm} from '../forms/incomeTransactionForm/incomeTransactionForm'
+import {CategoryListDropDown} from '../categoryListDropDown/categoryListDropDown'
 
 const useStyles = ()=>{
     const theme = useTheme()
@@ -44,8 +45,7 @@ const useStyles = ()=>{
                 justifyContent:'center',
                 alignItems:'center',
                 paddingVertical:25,
-                // borderWidth:1,
-                // borderColor:'white'
+                backgroundColor:theme.theme.primaryBackground,
             },
             buttonsHolder:{
                 width:'90%',
@@ -93,7 +93,7 @@ const useStyles = ()=>{
                 color:theme.theme.activeColor
             },
             formContainer:{
-                width:'100%',
+                flex:1,
             }
         })
     )
@@ -101,12 +101,37 @@ const useStyles = ()=>{
 
 export const AddTransactionPage = ({closeModal})=>{
     const [transactionType,setTransactionType] = useState('Expense')
+    const [showCategoryList,setShowCategoryList] = useState(false)
+    const [formData,setFormData] = useState({
+        date:'',
+        amount:'',
+        category:'',
+        particular:'',
+    })
 
     const styles = useStyles()
     const theme = useTheme()
 
     const handleChangeTransactionType = (type)=>{
         setTransactionType(type)
+    }
+
+    const handleOpenCategoryList = ()=>{
+        setShowCategoryList(true)
+    }
+
+    const handleCloseCategoryList = ()=>{
+        setShowCategoryList(false)
+    }
+
+    const onInputChangeHandler = (value,data_type)=>{
+        const updatedData = {...formData}
+        updatedData[data_type] = value;
+        setFormData(updatedData)
+
+        if(data_type==='category'){
+            handleCloseCategoryList()
+        }
     }
 
     return(
@@ -156,10 +181,22 @@ export const AddTransactionPage = ({closeModal})=>{
             <View style={styles.formContainer}>
                 {
                     transactionType==='Expense'
-                    ?<ExpenseTransactionForm/>
+                    ?<ExpenseTransactionForm
+                        formData={formData}
+                        onInputChangeHandler={onInputChangeHandler}
+                        closeModal={closeModal}
+                        openCategoryList={handleOpenCategoryList}
+                    />
                     :<IncomeTransactionForm />
                 }
             </View>
+            {
+                showCategoryList&&
+                <CategoryListDropDown
+                    onSelect = {onInputChangeHandler}
+                    closeCategoryList={handleCloseCategoryList}
+                />
+            }
         </View>
     )
 }

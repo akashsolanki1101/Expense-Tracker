@@ -18,7 +18,7 @@ const useStyles = ()=>{
 
 export const Chart = ()=>{
     const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0, visible: false, value: 0 })
-    const [graphData,setGraphData] = useState({labels:["M","T","W","T","F","S","S"],data:[10,100,200,50,100,70,200]})
+    const [graphData,setGraphData] = useState({labels:["M","T","W","T","F","S","S"],data:[10,60,200,50,100,70,200]})
     const styles = useStyles()
 
     const chartConfig={

@@ -19,7 +19,7 @@ const useStyles = ()=>{
                 justifyContent:'space-between',
                 position:'absolute',
                 right:5,
-                top:25,
+                top:21,
                 overflow:'hidden'
             },
             popUpTextContainer:{

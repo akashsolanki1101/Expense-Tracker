@@ -3,11 +3,11 @@ import React from 'react'
 import {View,Text,StyleSheet,TouchableNativeFeedback} from 'react-native'
 
 import {useTheme} from '../ui/themeContext/themeContext'
-import {AddTransactionButton} from '../addTransactionButton/addTransactionButton'
-import {PopUp} from '../popUp/popUp'
-import Entypo from 'react-native-vector-icons/Entypo'
+// import {AddTransactionButton} from '../addTransactionButton/addTransactionButton'
+// import {PopUp} from '../popUp/popUp'
+// import Entypo from 'react-native-vector-icons/Entypo'
 // import {CategoryCard} from '../cards/categoryCard/categoryCard'
-
+import {CategoryListDropDown} from '../categoryListDropDown/categoryListDropDown'
 
 const useStyles = ()=>{
     const theme = useTheme()
@@ -16,34 +16,10 @@ const useStyles = ()=>{
             container:{
                 flex:1,
                 backgroundColor:theme.theme.primaryBackground,
-                paddingHorizontal:18,
-                paddingVertical:20,
+                // paddingHorizontal:18,
+                // paddingVertical:20,
                 // borderWidth:1,
                 // borderColor:'white'
-            },
-            upperBlock:{
-                width:'100%',
-                // borderWidth:1,
-                // borderColor:'orange',
-                flexDirection:'row',
-                justifyContent:'space-between',
-            },
-            helloText:{
-                color:theme.theme.secondaryText,
-                fontSize:25,
-                fontWeight:'normal'
-            },
-            nameText:{
-                color:theme.theme.primaryText,
-                fontSize:40,
-                fontWeight:'bold',
-            },
-            searchIconContainer:{
-                // borderWidth:2,
-                // borderColor:'red',
-                marginRight:10,
-                justifyContent:'space-between',
-                paddingVertical:4
             },
         })
     )
@@ -59,20 +35,7 @@ export const IncomeHomePage = ()=>{
 
     return(
         <View style={styles.container}>
-            <View style={styles.upperBlock}>
-                <View style={styles.textContainer}>
-                    <Text style={styles.helloText}>Hello,</Text>
-                    <Text style={styles.nameText}>Akash</Text>
-                </View>
-                <View style={styles.searchIconContainer}>
-                    <TouchableNativeFeedback
-                        onPress={handleMenuButtonClick}
-                    >
-                        <Entypo name='dots-three-vertical' color={theme.theme.primaryText} size={23}/>
-                    </TouchableNativeFeedback>
-                </View>
-            </View>
-            <AddTransactionButton/>
+            <CategoryListDropDown/>
         </View>
     )
 }
