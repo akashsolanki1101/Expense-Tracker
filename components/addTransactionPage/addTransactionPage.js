@@ -3,8 +3,9 @@ import React,{useState} from 'react'
 import {View,Text,StyleSheet,TouchableNativeFeedback} from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
-
 import {useTheme} from '../ui/themeContext/themeContext'
+import {ExpenseTransactionForm} from '../forms/expenseTransactionForm/expenseTransactionForm'
+import {IncomeTransactionForm} from '../forms/incomeTransactionForm/incomeTransactionForm'
 
 const useStyles = ()=>{
     const theme = useTheme()
@@ -42,7 +43,9 @@ const useStyles = ()=>{
                 width:'100%',
                 justifyContent:'center',
                 alignItems:'center',
-                paddingTop:20,
+                paddingVertical:25,
+                // borderWidth:1,
+                // borderColor:'white'
             },
             buttonsHolder:{
                 width:'90%',
@@ -89,6 +92,9 @@ const useStyles = ()=>{
             activeButtonText:{
                 color:theme.theme.activeColor
             },
+            formContainer:{
+                width:'100%',
+            }
         })
     )
 }
@@ -146,6 +152,13 @@ export const AddTransactionPage = ({closeModal})=>{
                         </TouchableNativeFeedback>
                     </View>
                 </View>
+            </View>
+            <View style={styles.formContainer}>
+                {
+                    transactionType==='Expense'
+                    ?<ExpenseTransactionForm/>
+                    :<IncomeTransactionForm />
+                }
             </View>
         </View>
     )
