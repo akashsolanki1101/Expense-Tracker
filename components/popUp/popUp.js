@@ -46,7 +46,7 @@ export const PopUp = ({navigation,hideMenu})=>{
     } 
 
     const handleAnalysisButtonClick = ()=>{
-        navigation.navigate('Analysis')
+        navigation.navigate('Dashboard')
         hideMenu()
     } 
 
@@ -68,7 +68,7 @@ export const PopUp = ({navigation,hideMenu})=>{
                 onPress={handleAnalysisButtonClick}
             >
                 <View style={styles.popUpTextContainer}>
-                    <Text style={styles.popUpText}>Analysis</Text>
+                    <Text style={styles.popUpText}>Dashboard</Text>
                 </View>
             </TouchableNativeFeedback>
             <TouchableNativeFeedback

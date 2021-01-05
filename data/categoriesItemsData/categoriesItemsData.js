@@ -7,7 +7,7 @@ export const CategoriesItemsData = {
         iconDark:require('../../assets/img/transactionCard/bills-dark.png'),
         iconLight:require('../../assets/img/transactionCard/bills-light.png')
     },
-    'Clothing':{
+    'Clothes':{
         background:'#62BDCC',
         percentageBar1:'#48929e',
         percentageBar2:'#81e5f6',
@@ -15,7 +15,7 @@ export const CategoriesItemsData = {
         iconDark:require('../../assets/img/transactionCard/clothing-dark.png'),
         iconLight:require('../../assets/img/transactionCard/clothing-light.png')
     },
-    'Fast Food':{
+    'Food':{
         background:'#14c1a1',
         percentageBar1:'#1e987e',
         percentageBar2:'#75eed8',
@@ -55,7 +55,7 @@ export const CategoriesItemsData = {
         iconDark:require('../../assets/img/transactionCard/phone-dark.png'),
         iconLight:require('../../assets/img/transactionCard/phone-light.png')
     },
-    'Transportation':{
+    'Transport':{
         background:'#ff7097',   
         percentageBar1:'#b73b5d',
         percentageBar2:'#fba5bc',

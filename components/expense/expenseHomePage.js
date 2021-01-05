@@ -93,7 +93,7 @@ const useStyles=()=>{
     )
 }
 
-export const SpendingHomePage = ({navigation})=>{
+export const ExpenseHomePage = ({navigation})=>{
     const styles = useStyles()
     const theme = useTheme()
     const [title,setTitle] = useState('Statistics')
@@ -101,10 +101,15 @@ export const SpendingHomePage = ({navigation})=>{
     const [showMenuPopUp,setShowMenuPopUp] = useState(false)
     const userName = useSelector(state=>state.user.name)
 
+    const chartData = [{
+        data: [10,100,250,20,50,80,101],
+        strokeWidth:2,
+        color:(opacity=1)=>`rgba(255,255,255,0.8)`,
+    }]
     
     const list = [
         {
-            categoryName:'Fast Food',
+            categoryName:'Food',
             placeName:'Babaji',
             amount:1200,
             date:'11/01/2021'
@@ -116,7 +121,7 @@ export const SpendingHomePage = ({navigation})=>{
             date:'02/01/2021'
         },
         {
-            categoryName:'Clothing',
+            categoryName:'Clothes',
             placeName:'Leather Jacket',
             amount:2400,
             date:'31/12/2020'
@@ -156,7 +161,15 @@ export const SpendingHomePage = ({navigation})=>{
     const listHeaderComp = (
         <View style={styles.middleBlock}>
             <View style={styles.chartContainer}>
-                <Chart/>
+                <Chart
+                    data={chartData}
+                    transparent={false}
+                    withInnerLines={false}
+                    listenThemeChange={false}
+                    height={230}
+                    backgroundGradientFrom={'rgba(80,0,255,1)'}
+                    backgroundGradientTo={'rgba(0,220,240,1)'}
+                />
             </View>
             <View style={styles.transactionsContainer}>
                 <View style={styles.transactionsTextContainer}>
@@ -221,6 +234,7 @@ export const SpendingHomePage = ({navigation})=>{
                 >
                     <AddTransactionPage
                         closeModal={handleCloseModal}
+                        transactionTyppe={'Expense'}
                     />
                 </Modal>
                 {

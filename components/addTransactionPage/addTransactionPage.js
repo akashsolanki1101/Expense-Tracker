@@ -4,8 +4,7 @@ import {View,Text,StyleSheet,TouchableNativeFeedback} from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
 import {useTheme} from '../ui/themeContext/themeContext'
-import {ExpenseTransactionForm} from '../forms/expenseTransactionForm/expenseTransactionForm'
-import {IncomeTransactionForm} from '../forms/incomeTransactionForm/incomeTransactionForm'
+import {ExpenseTransactionForm} from '../transactionForm/transactionForm'
 import {CategoryListDropDown} from '../categoryListDropDown/categoryListDropDown'
 
 const useStyles = ()=>{
@@ -99,8 +98,8 @@ const useStyles = ()=>{
     )
 }
 
-export const AddTransactionPage = ({closeModal})=>{
-    const [transactionType,setTransactionType] = useState('Expense')
+export const AddTransactionPage = ({closeModal,transactionTyppe})=>{
+    const [transactionType,setTransactionType] = useState(transactionTyppe)
     const [showCategoryList,setShowCategoryList] = useState(false)
     const [formData,setFormData] = useState({
         date:'',
@@ -186,8 +185,15 @@ export const AddTransactionPage = ({closeModal})=>{
                         onInputChangeHandler={onInputChangeHandler}
                         closeModal={closeModal}
                         openCategoryList={handleOpenCategoryList}
+                        transactionType={transactionType}
                     />
-                    :<IncomeTransactionForm />
+                    :<ExpenseTransactionForm
+                        formData={formData}
+                        onInputChangeHandler={onInputChangeHandler}
+                        closeModal={closeModal}
+                        openCategoryList={handleOpenCategoryList}
+                        transactionType={transactionType}
+                    />
                 }
             </View>
             {

@@ -6,9 +6,9 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
-import {SpendingHomePage} from '../components/spendings/spendingHomePage'
+import {ExpenseHomePage} from '../components/expense/expenseHomePage'
 import {IncomeHomePage} from "../components/income/incomeHomePage"
-import {AnalysisPage} from '../components/analysis/analysis'
+import {DashboardPage} from '../components/dashboard/dashboard'
 import {CategoriesPage} from '../components/categories/categories'
 import {SettingsPage} from '../components/settings/settings'
 import {CategoryPage} from '../components/category/category'
@@ -32,7 +32,7 @@ export const HomeNavigator = ()=>{
         >
             <Tab.Screen
                 name="Expense"
-                component={SpendingHomePage}
+                component={ExpenseHomePage}
                 options={{
                     tabBarIcon:({color})=>(<AntDesign name="upcircleo" size={18} color={color}/>),
                     tabBarLabel:({color})=>(<Text style={{color:color}}>Expense</Text>)
@@ -75,8 +75,8 @@ export const StackNavigator = ()=>{
                 }}
             />
             <Stack.Screen
-                name="Analysis"
-                component={AnalysisPage}
+                name="Dashboard"
+                component={DashboardPage}
                 options={{
                     headerStyle:{
                         backgroundColor:theme.theme.primaryBackground,

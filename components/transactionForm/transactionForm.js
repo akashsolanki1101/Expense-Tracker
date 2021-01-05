@@ -5,8 +5,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Foundation from 'react-native-vector-icons/Foundation'
 
-import {useTheme} from '../../ui/themeContext/themeContext'
-import {CategoryListDropDown} from '../../categoryListDropDown/categoryListDropDown'
+import {useTheme} from '../ui/themeContext/themeContext'
+import {CategoryListDropDown} from '../categoryListDropDown/categoryListDropDown'
 
 const useStyles = ()=>{
     const theme = useTheme()
@@ -77,7 +77,7 @@ const useStyles = ()=>{
     )
 }
 
-export const ExpenseTransactionForm = ({formData,onInputChangeHandler,closeModal,openCategoryList})=>{
+export const ExpenseTransactionForm = ({formData,onInputChangeHandler,closeModal,openCategoryList,transactionType})=>{
     const styles = useStyles()
 
     return(
@@ -101,7 +101,7 @@ export const ExpenseTransactionForm = ({formData,onInputChangeHandler,closeModal
                         <View style={styles.inputTypeIconContainer}>
                             <Foundation name="clipboard-notes" size={24} style={styles.inputTypeIcon}/>
                         </View>
-                        <Text style={styles.inputTypeText}>Particular</Text>
+                        <Text style={styles.inputTypeText}>{transactionType==='Expense'?'Particular':'Miscellaneous'}</Text>
                     </View>
                     <TextInput
                         value={formData.particular}
@@ -123,22 +123,26 @@ export const ExpenseTransactionForm = ({formData,onInputChangeHandler,closeModal
                         style={styles.textInput}
                     />
                 </View>
-                <View style={styles.formElement}>
-                    <View style={styles.inputType}>
-                        <View style={styles.inputTypeIconContainer}>
-                            <FontAwesome name="list-ul" size={22} style={styles.inputTypeIcon}/>
+                {
+                    transactionType==='Expense'?
+                    <View style={styles.formElement}>
+                        <View style={styles.inputType}>
+                            <View style={styles.inputTypeIconContainer}>
+                                <FontAwesome name="list-ul" size={22} style={styles.inputTypeIcon}/>
+                            </View>
+                            <Text style={styles.inputTypeText}>Category</Text>
                         </View>
-                        <Text style={styles.inputTypeText}>Category</Text>
+                        <TouchableWithoutFeedback
+                            onPress={openCategoryList}
+                        >
+                            <View style={styles.categoryInput}>
+                                <Text style={styles.categoryText}>{formData.category}</Text>
+                                <FontAwesome name="caret-down" size={22} style={styles.inputTypeIcon}/>
+                            </View>
+                        </TouchableWithoutFeedback>
                     </View>
-                    <TouchableWithoutFeedback
-                        onPress={openCategoryList}
-                    >
-                        <View style={styles.categoryInput}>
-                            <Text style={styles.categoryText}>{formData.category}</Text>
-                            <FontAwesome name="caret-down" size={22} style={styles.inputTypeIcon}/>
-                        </View>
-                    </TouchableWithoutFeedback>
-                </View>
+                    :null
+                }
             </View>
             <View style={styles.responseButtonContainer}>
                 <View style={{width:'40%',borderRadius:10,elevation:10,overflow:'hidden'}}>

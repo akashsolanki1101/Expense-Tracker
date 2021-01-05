@@ -1,12 +1,12 @@
 export const CategoriesList = [
     'Bills',
-    'Clothing',
-    'Fast Food',
+    'Clothes',
+    'Food',
     'Grocery',
     'Kids',
     'Personal Care',
     'Phone',
-    'Transportation',
+    'Transport',
     'Others'
 ]
 
