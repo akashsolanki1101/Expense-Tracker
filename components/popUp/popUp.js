@@ -10,13 +10,11 @@ const useStyles = ()=>{
         StyleSheet.create({
             container:{
                 width:170,
-                height:150,
                 backgroundColor:theme.theme.secondaryBackground,
                 elevation:10,
                 borderWidth:1,
                 borderColor:theme.theme.secondaryText,
                 borderRadius:20,
-                justifyContent:'space-between',
                 position:'absolute',
                 right:5,
                 top:21,
@@ -24,9 +22,9 @@ const useStyles = ()=>{
             },
             popUpTextContainer:{
                 width:'100%',
-                height:'33%',
                 justifyContent:'center',
                 paddingHorizontal:15,
+                paddingVertical:12,
             },
             popUpText:{
                 color:theme.theme.primaryText,
@@ -37,7 +35,7 @@ const useStyles = ()=>{
     )
 }
 
-export const PopUp = ({navigation,hideMenu})=>{
+export const PopUp = ({navigation,hideMenu,showCategory})=>{
     const styles = useStyles()
 
     const handleCategoriesButtonClick = ()=>{
@@ -57,13 +55,16 @@ export const PopUp = ({navigation,hideMenu})=>{
 
     return(
         <View style={styles.container}>
-            <TouchableNativeFeedback
-                onPress={handleCategoriesButtonClick}
-            >
-                <View style={styles.popUpTextContainer}>  
-                    <Text style={styles.popUpText}>Categories</Text>
-                </View>
-            </TouchableNativeFeedback>
+            {
+                showCategory&&
+                <TouchableNativeFeedback
+                    onPress={handleCategoriesButtonClick}
+                >
+                    <View style={styles.popUpTextContainer}>  
+                        <Text style={styles.popUpText}>Categories</Text>
+                    </View>
+                </TouchableNativeFeedback>
+            }
             <TouchableNativeFeedback
                 onPress={handleAnalysisButtonClick}
             >

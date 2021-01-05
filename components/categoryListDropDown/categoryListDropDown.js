@@ -3,6 +3,7 @@ import React from 'react'
 import {View,Text,StyleSheet,FlatList,TouchableNativeFeedback,TouchableWithoutFeedback} from 'react-native'
 
 import {useTheme} from '../ui/themeContext/themeContext'
+import {CategoriesList} from '../../data/categoriesList/categoriesList'
 
 const useStyles = ()=>{
     const theme = useTheme()
@@ -51,17 +52,6 @@ const useStyles = ()=>{
 export const CategoryListDropDown = ({onSelect,closeCategoryList})=>{
     const styles = useStyles()
 
-    const list = [
-        'Bills',
-        'Clothing',
-        'Fast Food',
-        'Grocery',
-        'Kids',
-        'Personal Care',
-        'Phone',
-        'Transportation',
-        'Others'
-    ]
     
     return(
         <TouchableWithoutFeedback
@@ -77,7 +67,7 @@ export const CategoryListDropDown = ({onSelect,closeCategoryList})=>{
                         </View>
                         <FlatList
                             keyExtractor={item=>item}
-                            data={list}
+                            data={CategoriesList}
                             renderItem={({item})=>{
                                 return(
                                     <TouchableNativeFeedback

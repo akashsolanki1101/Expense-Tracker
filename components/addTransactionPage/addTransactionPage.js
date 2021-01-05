@@ -1,11 +1,14 @@
 import React,{useState} from 'react'
 
 import {View,Text,StyleSheet,TouchableNativeFeedback} from 'react-native'
+import {useDispatch} from 'react-redux'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
 import {useTheme} from '../ui/themeContext/themeContext'
 import {ExpenseTransactionForm} from '../transactionForm/transactionForm'
 import {CategoryListDropDown} from '../categoryListDropDown/categoryListDropDown'
+import {addIncomeTransaction} from '../../store/actions/transactionDataActions'
+import {addExpenseTransaction} from '../../store/actions/transactionDataActions'
 
 const useStyles = ()=>{
     const theme = useTheme()
@@ -110,6 +113,7 @@ export const AddTransactionPage = ({closeModal,transactionTyppe})=>{
 
     const styles = useStyles()
     const theme = useTheme()
+    const dispatch = useDispatch()
 
     const handleChangeTransactionType = (type)=>{
         setTransactionType(type)
@@ -130,6 +134,27 @@ export const AddTransactionPage = ({closeModal,transactionTyppe})=>{
 
         if(data_type==='category'){
             handleCloseCategoryList()
+        }
+    }
+
+    const handleOnSaveClick = ()=>{
+        if(transactionType==='Expense'){
+            const amount = parseInt(formData.amount)
+            const data = {
+                amount : amount,
+                category:formData.category,
+                date:formData.date,
+                particular : formData.particular
+            }
+            dispatch(addExpenseTransaction(data))
+        }else{
+            const amount = parseInt(formData.amount)
+            const data = {
+                amount : amount,
+                date:formData.date,
+                miscellaneous : formData.particular
+            }
+            dispatch(addIncomeTransaction(data))
         }
     }
 
@@ -186,6 +211,7 @@ export const AddTransactionPage = ({closeModal,transactionTyppe})=>{
                         closeModal={closeModal}
                         openCategoryList={handleOpenCategoryList}
                         transactionType={transactionType}
+                        saveTransaction={handleOnSaveClick}
                     />
                     :<ExpenseTransactionForm
                         formData={formData}
@@ -193,6 +219,7 @@ export const AddTransactionPage = ({closeModal,transactionTyppe})=>{
                         closeModal={closeModal}
                         openCategoryList={handleOpenCategoryList}
                         transactionType={transactionType}
+                        saveTransaction={handleOnSaveClick}
                     />
                 }
             </View>

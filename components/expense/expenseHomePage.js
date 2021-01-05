@@ -100,6 +100,9 @@ export const ExpenseHomePage = ({navigation})=>{
     const [openModal,setOpenModal] = useState(false)
     const [showMenuPopUp,setShowMenuPopUp] = useState(false)
     const userName = useSelector(state=>state.user.name)
+    const expenseTransactionList = useSelector(state=>state.transaction.expenseData)
+
+    console.log(expenseTransactionList);
 
     const chartData = [{
         data: [10,100,250,20,50,80,101],
@@ -242,6 +245,7 @@ export const ExpenseHomePage = ({navigation})=>{
                     <PopUp 
                         navigation={navigation}
                         hideMenu={handleHideMenu}
+                        showCategory={true}
                     />
                 }
             </View>

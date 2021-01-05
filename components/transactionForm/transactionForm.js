@@ -77,7 +77,7 @@ const useStyles = ()=>{
     )
 }
 
-export const ExpenseTransactionForm = ({formData,onInputChangeHandler,closeModal,openCategoryList,transactionType})=>{
+export const ExpenseTransactionForm = ({formData,onInputChangeHandler,closeModal,openCategoryList,transactionType,saveTransaction})=>{
     const styles = useStyles()
 
     return(
@@ -155,7 +155,9 @@ export const ExpenseTransactionForm = ({formData,onInputChangeHandler,closeModal
                     </TouchableNativeFeedback>
                 </View>
                 <View style={{width:'40%',borderRadius:10,elevation:10,overflow:'hidden'}}>
-                    <TouchableNativeFeedback>
+                    <TouchableNativeFeedback
+                        onPress={saveTransaction}
+                    >
                         <View style={styles.responseButton}>
                             <Text style={styles.responseButtonText}>Save</Text>
                         </View>

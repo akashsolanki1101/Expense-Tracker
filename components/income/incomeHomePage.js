@@ -243,6 +243,7 @@ export const IncomeHomePage = ({navigation})=>{
                     <PopUp 
                         navigation={navigation}
                         hideMenu={handleHideMenu}
+                        showCategory={false}
                     />
                 }
             </View>
