@@ -104,8 +104,11 @@ export const ExpenseTransactionForm = ({formData,onInputChangeHandler,closeModal
                         <Text style={styles.inputTypeText}>{transactionType==='Expense'?'Particular':'Miscellaneous'}</Text>
                     </View>
                     <TextInput
-                        value={formData.particular}
-                        onChangeText={(value)=>onInputChangeHandler(value,'particular')}
+                        value={transactionType==='Expense'?formData.particular:formData.miscellanous}
+                        onChangeText={(value)=>{
+                            const name = transactionType==='Expense'?'particular':'miscellaneous'
+                            onInputChangeHandler(value,name)
+                        }}
                         style={styles.textInput}
                     />
                 </View>

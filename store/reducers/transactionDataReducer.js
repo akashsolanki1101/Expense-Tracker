@@ -1,5 +1,11 @@
 const initialState = {
-    expenseData:[],
+    expenseData:[{
+        id:'1345',
+        category:'Food',
+        particular:'Pizza',
+        amount:200,
+        date:'12/12/2020'
+    }],
     incomeData:[]
 }
 
@@ -7,19 +13,19 @@ const reducer = (state=initialState,action)=>{
     switch(action.type){
         case 'ADD_EXPENSE_TRANSACTION':{
             const oldExpenseData = [...state.expenseData]
-            const updatedExpenseData = oldExpenseData.splice(0,0,action.data)
+            oldExpenseData.splice(0,0,action.data)
             return{
                 ...state,
-                expenseData:updatedExpenseData
+                expenseData:oldExpenseData
             }
         }
 
         case 'ADD_INCOME_TRANSACTION':{
             const oldIncomeData = [...state.incomeData]
-            const updatedIncomeData = oldIncomeData.splice(0,0,action.data)
+            oldIncomeData.splice(0,0,action.data)
             return{
                 ...state,
-                incomeData:updatedIncomeData
+                incomeData:oldIncomeData
             }
         }
 

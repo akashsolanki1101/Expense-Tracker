@@ -109,6 +109,7 @@ export const AddTransactionPage = ({closeModal,transactionTyppe})=>{
         amount:'',
         category:'',
         particular:'',
+        miscellaneous:''
     })
 
     const styles = useStyles()
@@ -138,24 +139,29 @@ export const AddTransactionPage = ({closeModal,transactionTyppe})=>{
     }
 
     const handleOnSaveClick = ()=>{
+        const currDate = new Date()
+        const timeStamp = currDate.getTime()
         if(transactionType==='Expense'){
             const amount = parseInt(formData.amount)
             const data = {
+                id:timeStamp.toString(),
                 amount : amount,
-                category:formData.category,
-                date:formData.date,
+                category : formData.category,
+                date : formData.date,
                 particular : formData.particular
             }
             dispatch(addExpenseTransaction(data))
         }else{
             const amount = parseInt(formData.amount)
             const data = {
+                id:timeStamp,
                 amount : amount,
-                date:formData.date,
-                miscellaneous : formData.particular
+                date : formData.date,
+                miscellaneous : formData.miscellaneous
             }
             dispatch(addIncomeTransaction(data))
         }
+        closeModal()
     }
 
     return(

@@ -11,6 +11,7 @@ import {TransactionCard} from '../cards/transactionCard/transactionCard'
 import {AddTransactionButton} from '../addTransactionButton/addTransactionButton'
 import {PopUp} from '../popUp/popUp'
 import {AddTransactionPage} from '../addTransactionPage/addTransactionPage'
+import {TransactionsList} from '../transactionsList/transactionsList'
 
 const useStyles = ()=>{
     const theme = useTheme()
@@ -101,6 +102,7 @@ export const IncomeHomePage = ({navigation})=>{
     const [openModal,setOpenModal] = useState(false)
     const [showMenuPopUp,setShowMenuPopUp] = useState(false)
     const userName = useSelector(state=>state.user.name)
+    const incomeTransactionList = useSelector(state=>state.transaction.incomeData)
 
     const chartData = [{
         data: [10,100,250,20,50,200,101],
@@ -108,33 +110,6 @@ export const IncomeHomePage = ({navigation})=>{
         color:(opacity=1)=>`rgba(255,255,255,0.8)`,
     }]
     
-    const list = [
-        {
-            categoryName:'Food',
-            placeName:'Babaji',
-            amount:1200,
-            date:'11/01/2021'
-        },
-        {
-            categoryName:'Bills',
-            placeName:'Electricity',
-            amount:900,
-            date:'02/01/2021'
-        },
-        {
-            categoryName:'Clothes',
-            placeName:'Leather Jacket',
-            amount:2400,
-            date:'31/12/2020'
-        },
-        {
-            categoryName:'Kids',
-            placeName:'Cricket Bat',
-            amount:600,
-            date:'10/11/2020'
-        },
-    ]
-
     const handleShowMenu = ()=>{
         setShowMenuPopUp(true)
     }
@@ -210,21 +185,10 @@ export const IncomeHomePage = ({navigation})=>{
                     </View>
                 </View>
                 <View style={styles.lowerBlock}>
-                    <FlatList
-                        keyExtractor={item=>item.date}
-                        data={list}
-                        renderItem={({item})=>{
-                            return(
-                                <TransactionCard
-                                    categoryName={item.categoryName}
-                                    amount={item.amount}
-                                    placeName={item.placeName}
-                                    date={item.date}
-                                />
-                            )
-                        }}
-                        ListHeaderComponent={listHeaderComp}
-                        onScroll={handleScroll}
+                    <TransactionsList
+                        data={incomeTransactionList}
+                        listHeaderComp={listHeaderComp}
+                        handleScroll={handleScroll}
                     />
                 </View>
                 <AddTransactionButton

@@ -6,10 +6,10 @@ import {useSelector} from 'react-redux'
 
 import {useTheme} from '../ui/themeContext/themeContext'
 import {Chart} from '../chart/chart'
-import {TransactionCard} from '../cards/transactionCard/transactionCard'
 import {AddTransactionButton} from '../addTransactionButton/addTransactionButton'
 import {PopUp} from '../popUp/popUp'
 import {AddTransactionPage} from '../addTransactionPage/addTransactionPage'
+import {TransactionsList} from '../transactionsList/transactionsList'
 
 const useStyles=()=>{
     const theme = useTheme()
@@ -102,41 +102,12 @@ export const ExpenseHomePage = ({navigation})=>{
     const userName = useSelector(state=>state.user.name)
     const expenseTransactionList = useSelector(state=>state.transaction.expenseData)
 
-    console.log(expenseTransactionList);
-
     const chartData = [{
         data: [10,100,250,20,50,80,101],
         strokeWidth:2,
         color:(opacity=1)=>`rgba(255,255,255,0.8)`,
     }]
     
-    const list = [
-        {
-            categoryName:'Food',
-            placeName:'Babaji',
-            amount:1200,
-            date:'11/01/2021'
-        },
-        {
-            categoryName:'Bills',
-            placeName:'Electricity',
-            amount:900,
-            date:'02/01/2021'
-        },
-        {
-            categoryName:'Clothes',
-            placeName:'Leather Jacket',
-            amount:2400,
-            date:'31/12/2020'
-        },
-        {
-            categoryName:'Kids',
-            placeName:'Cricket Bat',
-            amount:600,
-            date:'10/11/2020'
-        },
-    ]
-
     const handleShowMenu = ()=>{
         setShowMenuPopUp(true)
     }
@@ -212,21 +183,10 @@ export const ExpenseHomePage = ({navigation})=>{
                     </View>
                 </View>
                 <View style={styles.lowerBlock}>
-                    <FlatList
-                        keyExtractor={item=>item.date}
-                        data={list}
-                        renderItem={({item})=>{
-                            return(
-                                <TransactionCard
-                                    categoryName={item.categoryName}
-                                    amount={item.amount}
-                                    placeName={item.placeName}
-                                    date={item.date}
-                                />
-                            )
-                        }}
-                        ListHeaderComponent={listHeaderComp}
-                        onScroll={handleScroll}
+                    <TransactionsList
+                        data={expenseTransactionList}
+                        listHeaderComp={listHeaderComp}
+                        handleScroll={handleScroll}
                     />
                 </View>
                 <AddTransactionButton
