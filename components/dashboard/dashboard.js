@@ -3,9 +3,11 @@ import React from 'react'
 import {View,Text,StyleSheet,Dimensions} from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import LinearGradient from 'react-native-linear-gradient'
+import {useSelector} from 'react-redux'
 
 import {useTheme} from '../ui/themeContext/themeContext'
 import {Chart} from '../chart/chart'
+import {getCurrentWeekData,getCurrentWeekTotalAmount} from '../../dataExtractor/dataExtractor'
 
 const useStyles = ()=>{
     const theme = useTheme()
@@ -101,13 +103,19 @@ const useStyles = ()=>{
 
 export const DashboardPage = ()=>{
     const styles = useStyles()
+    const expenseTransactionsList = useSelector(state=>state.transaction.expenseData)
+    const incomeTransactionsList = useSelector(state=>state.transaction.incomeData)
+    const currentPeriodExpenseTransactionsList = getCurrentWeekData(expenseTransactionsList,expenseTransactionsList.length)
+    const currentPeriodIncomeTransactionsList = getCurrentWeekData(incomeTransactionsList,incomeTransactionsList.length)
+    const currentPeriodTotalExpense = getCurrentWeekTotalAmount(currentPeriodExpenseTransactionsList,currentPeriodExpenseTransactionsList.length)
+    const currentPeriodTotalIncome = getCurrentWeekTotalAmount(currentPeriodIncomeTransactionsList,currentPeriodExpenseTransactionsList.length)
 
     const chartData = [{
-        data: [10,100,250,20,50,80,101],
+        data: currentPeriodExpenseTransactionsList,
         strokeWidth:2,
         color:(opacity=1)=>`rgba(86,142,218,1)`,
     },{
-        data: [50,10,150,5,225,20,201],
+        data: currentPeriodIncomeTransactionsList,
         strokeWidth:2,
         color:(opacity=1)=>`rgba(189,79,130,1)`,
     }]
@@ -117,7 +125,7 @@ export const DashboardPage = ()=>{
             <View style={styles.upperBlock}>
                 <View style={styles.totalAmountContainer}>
                     <Text style={styles.title}>Total</Text>
-                    <Text style={styles.amountText}>₹ 50000</Text>
+                    <Text style={styles.amountText}>₹ {currentPeriodTotalIncome - currentPeriodTotalExpense}</Text>
                 </View>
                 <View style={styles.cardsContainer}>
                     <View style={styles.card}>
@@ -131,7 +139,7 @@ export const DashboardPage = ()=>{
                                 <AntDesign name="upcircleo" size={18} style={styles.cardIcon}/>
                                 <Text style={styles.cardTitle}>Expense</Text>
                             </View>
-                            <Text style={styles.cardAmountText}>₹ 20000</Text>
+                            <Text style={styles.cardAmountText}>₹ {currentPeriodTotalExpense}</Text>
                         </LinearGradient>
                     </View>
                     <View style={{...styles.card,backgroundColor:'#89306d'}}>
@@ -145,7 +153,7 @@ export const DashboardPage = ()=>{
                                 <AntDesign name="downcircleo" size={18} style={styles.cardIcon}/>
                                 <Text style={styles.cardTitle}>Income</Text>
                             </View>
-                            <Text style={styles.cardAmountText}>₹ 70000</Text>
+                            <Text style={styles.cardAmountText}>₹ {currentPeriodTotalIncome}</Text>
                         </LinearGradient>
                     </View>
                 </View>

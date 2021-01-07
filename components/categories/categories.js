@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {View,Text,StyleSheet,FlatList} from 'react-native'
+import {View,StyleSheet,FlatList} from 'react-native'
 
 import {useTheme} from '../ui/themeContext/themeContext'
 import {CategoryCard} from '../cards/categoryCard/categoryCard'
@@ -12,16 +12,16 @@ const useStyles = ()=>{
         StyleSheet.create({
             container:{
                 flex:1,
-                backgroundColor:theme.theme.primaryBackground
+                backgroundColor:theme.theme.primaryBackground,
             },
             categoriesListContainer:{
-                width:'100%',
-                paddingVertical:10,
-                paddingHorizontal:10
+                flex:1,
+                paddingHorizontal:10,
             },
             categoryCardStyle:{
-                width:165,
-                marginHorizontal:8
+                width:'45%',
+                marginVertical:10,
+                marginHorizontal:'2.5%'
             },
             categoryIconStyle:{
                 width:80,
@@ -43,11 +43,11 @@ export const CategoriesPage = ({navigation})=>{
     return(
         <View style={styles.container}>
             <View style={styles.categoriesListContainer}>
-            {
-                    <FlatList
+                <FlatList
                     keyExtractor={item=>item}
                     data={CategoriesList}
-                    horizontal={true}
+                    // horizontal={true}
+                    numColumns={2}
                     renderItem={({item})=>{
                         return(
                             <CategoryCard
@@ -59,7 +59,6 @@ export const CategoriesPage = ({navigation})=>{
                         )
                     }}
                 />
-            }
             </View>
         </View>
     )

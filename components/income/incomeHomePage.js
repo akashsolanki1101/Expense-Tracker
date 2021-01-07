@@ -4,7 +4,6 @@ import {View,Text,StyleSheet,TouchableNativeFeedback,TouchableWithoutFeedback,Fl
 import {useSelector} from 'react-redux'
 import Entypo from 'react-native-vector-icons/Entypo'
 
-
 import {useTheme} from '../ui/themeContext/themeContext'
 import {Chart} from '../chart/chart'
 import {TransactionCard} from '../cards/transactionCard/transactionCard'
@@ -12,6 +11,7 @@ import {AddTransactionButton} from '../addTransactionButton/addTransactionButton
 import {PopUp} from '../popUp/popUp'
 import {AddTransactionPage} from '../addTransactionPage/addTransactionPage'
 import {TransactionsList} from '../transactionsList/transactionsList'
+import {getCurrentWeekData,getCurrentWeekTotalAmount} from '../../dataExtractor/dataExtractor'
 
 const useStyles = ()=>{
     const theme = useTheme()
@@ -103,9 +103,12 @@ export const IncomeHomePage = ({navigation})=>{
     const [showMenuPopUp,setShowMenuPopUp] = useState(false)
     const userName = useSelector(state=>state.user.name)
     const incomeTransactionList = useSelector(state=>state.transaction.incomeData)
+    const currentPeriodTransactionsList = getCurrentWeekData(incomeTransactionList,incomeTransactionList.length)
+    const currentPeriodTotalIncome =  getCurrentWeekTotalAmount(currentPeriodTransactionsList,currentPeriodTransactionsList.length)
+
 
     const chartData = [{
-        data: [10,100,250,20,50,200,101],
+        data: currentPeriodTransactionsList,
         strokeWidth:2,
         color:(opacity=1)=>`rgba(255,255,255,0.8)`,
     }]
@@ -176,7 +179,7 @@ export const IncomeHomePage = ({navigation})=>{
                     </View>
                     <View style={styles.statsContainer}>
                         <View style={styles.amountContainer}>
-                            <Text style={styles.amountText}>₹ 1,673.80</Text>
+                            <Text style={styles.amountText}>₹ {currentPeriodTotalIncome}</Text>
                             <Text style={styles.durationText}>earned during this period</Text>
                         </View>
                         <View style={styles.statisticsTextContainer}>
@@ -189,6 +192,7 @@ export const IncomeHomePage = ({navigation})=>{
                         data={incomeTransactionList}
                         listHeaderComp={listHeaderComp}
                         handleScroll={handleScroll}
+                        transactionType={'Income'}
                     />
                 </View>
                 <AddTransactionButton

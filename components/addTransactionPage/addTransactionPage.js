@@ -154,10 +154,11 @@ export const AddTransactionPage = ({closeModal,transactionTyppe})=>{
         }else{
             const amount = parseInt(formData.amount)
             const data = {
-                id:timeStamp,
+                id : timeStamp.toString(),
                 amount : amount,
                 date : formData.date,
-                miscellaneous : formData.miscellaneous
+                particular : formData.miscellaneous,
+                category:'Income'
             }
             dispatch(addIncomeTransaction(data))
         }

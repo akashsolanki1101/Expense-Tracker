@@ -1,6 +1,7 @@
 import React from 'react'
 
 import {View,Text,StyleSheet,Image} from 'react-native'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 import {useTheme} from "../../ui/themeContext/themeContext"
 import {CategoriesItemsData} from '../../../data/categoriesItemsData/categoriesItemsData'
@@ -14,7 +15,7 @@ const useStyles = ()=>{
                 backgroundColor:theme.theme.secondaryBackground,
                 borderRadius:15,
                 height:70,
-                marginTop:18,
+                marginVertical:10,
                 paddingHorizontal:10,
                 paddingVertical:8,
                 flexDirection:'row',
@@ -41,16 +42,25 @@ const useStyles = ()=>{
                 width:'81%',
                 justifyContent:'space-between'
             },
-            spendingPlaceAndCategoryContainer:{},
-            placeNameContainer:{},
+            spendingPlaceAndCategoryContainer:{
+                width:'70%',
+                borderWidth:1,
+                borderColor:'white'
+            },
+            placeNameContainer:{
+                overflow:'hidden',
+
+            },
             placeNameText:{
                 color:theme.theme.primaryText,
                 fontSize:18,
                 fontWeight:'bold',
+                textTransform:'capitalize'
             },
             categoryNameContainer:{},
             categoryName:{
                 color:theme.theme.secondaryText,
+                textTransform:'capitalize'
             },
             amountAndDateContainer:{
                 alignItems:'flex-end',
@@ -69,22 +79,30 @@ const useStyles = ()=>{
     )
 }
 
-export const TransactionCard = ({categoryName,placeName,amount,date})=>{
+export const TransactionCard = ({categoryName,placeName,amount,date,transactionType})=>{
     const styles = useStyles()
     const theme = useTheme()
     const mode = theme.mode
-    const imageUrl = mode==='dark'?CategoriesItemsData[categoryName].iconDark:CategoriesItemsData[categoryName].iconLight
+    const finalAmount = transactionType==='Expense'?`- ₹ ${amount}`:`₹ ${amount}`
+    let imageUrl
 
+    if(transactionType==='Expense'){
+        imageUrl = mode==='dark'?CategoriesItemsData[categoryName].iconDark:CategoriesItemsData[categoryName].iconLight
+    }
 
     return(
         <View style={styles.container}>
             <View style={styles.categoryIconContainer}>
-                <Image style={styles.categoryIcon} source={imageUrl}/>
+            {
+                transactionType==='Expense'
+                ?<Image style={styles.categoryIcon} source={imageUrl}/>
+                :<FontAwesome name="rupee" size={26} color={theme.theme.activeColor}/>
+            }
             </View>
             <View style={styles.spendingInfoContainer}>
                 <View style={styles.spendingPlaceAndCategoryContainer}>
                     <View style={styles.placeNameContainer}> 
-                        <Text style={styles.placeNameText}>{placeName}</Text>
+                        <Text numberOfLines={1} style={styles.placeNameText}>{placeName}</Text>
                     </View>
                     <View style={styles.categoryNameContainer}> 
                         <Text style={styles.categoryName}>{categoryName}</Text>
@@ -92,7 +110,7 @@ export const TransactionCard = ({categoryName,placeName,amount,date})=>{
                 </View>
                 <View style={styles.amountAndDateContainer}>
                     <View style={styles.amountContainer}>
-                        <Text style={styles.amountText}>₹ {amount}</Text>
+                        <Text style={styles.amountText}>{finalAmount}</Text>
                     </View>
                     <View style={styles.dateContainer}>
                         <Text style={styles.dateText}>{date}</Text>

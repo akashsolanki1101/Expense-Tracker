@@ -40,8 +40,7 @@ export const Chart = ({data,transparent,withInnerLines,listenThemeChange,height,
             stroke: listenThemeChange?theme.theme.secondaryText:'white',
         },
         propsForLabels:{
-            fontSize:listenThemeChange?12:13,
-            fontWeight:listenThemeChange?'normal':'bold',
+            fontSize:12,
             stroke: listenThemeChange?theme.theme.primaryText:'white',
         },
     }

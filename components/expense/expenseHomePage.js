@@ -10,6 +10,7 @@ import {AddTransactionButton} from '../addTransactionButton/addTransactionButton
 import {PopUp} from '../popUp/popUp'
 import {AddTransactionPage} from '../addTransactionPage/addTransactionPage'
 import {TransactionsList} from '../transactionsList/transactionsList'
+import {getCurrentWeekData,getCurrentYearData,getCurrentWeekTotalAmount} from '../../dataExtractor/dataExtractor'
 
 const useStyles=()=>{
     const theme = useTheme()
@@ -101,12 +102,16 @@ export const ExpenseHomePage = ({navigation})=>{
     const [showMenuPopUp,setShowMenuPopUp] = useState(false)
     const userName = useSelector(state=>state.user.name)
     const expenseTransactionList = useSelector(state=>state.transaction.expenseData)
+    const currentPeriodTransactionsList = getCurrentWeekData(expenseTransactionList,expenseTransactionList.length)
+    const currentPeriodTotalExpense =  getCurrentWeekTotalAmount(currentPeriodTransactionsList,currentPeriodTransactionsList.length)
 
     const chartData = [{
-        data: [10,100,250,20,50,80,101],
+        data: currentPeriodTransactionsList,
         strokeWidth:2,
         color:(opacity=1)=>`rgba(255,255,255,0.8)`,
     }]
+
+    // getCurrentYearData()
     
     const handleShowMenu = ()=>{
         setShowMenuPopUp(true)
@@ -174,7 +179,7 @@ export const ExpenseHomePage = ({navigation})=>{
                     </View>
                     <View style={styles.statsContainer}>
                         <View style={styles.amountContainer}>
-                            <Text style={styles.amountText}>₹ 1,673.80</Text>
+                            <Text style={styles.amountText}>₹ {currentPeriodTotalExpense}</Text>
                             <Text style={styles.durationText}>spent during this period</Text>
                         </View>
                         <View style={styles.statisticsTextContainer}>
@@ -187,6 +192,7 @@ export const ExpenseHomePage = ({navigation})=>{
                         data={expenseTransactionList}
                         listHeaderComp={listHeaderComp}
                         handleScroll={handleScroll}
+                        transactionType={'Expense'}
                     />
                 </View>
                 <AddTransactionButton

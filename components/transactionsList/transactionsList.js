@@ -22,7 +22,7 @@ const useStyles = ()=>{
     )
 }
 
-export const TransactionsList = ({data,listHeaderComp,handleScroll})=>{
+export const TransactionsList = ({data,listHeaderComp,handleScroll,transactionType})=>{
     const styles = useStyles()
 
     const listEmptyComp = <Text style={styles.messageText}>No transaction found!</Text>
@@ -37,6 +37,7 @@ export const TransactionsList = ({data,listHeaderComp,handleScroll})=>{
                     amount={item.amount}
                     placeName={item.particular}
                     date={item.date}
+                    transactionType={transactionType}
                 />
             }
             ListHeaderComponent={listHeaderComp}

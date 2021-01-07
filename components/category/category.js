@@ -59,6 +59,7 @@ export const CategoryPage = ({route})=>{
                     data={selectedCategoryTransactionsList}
                     listHeaderComp={null}
                     handleScroll={()=>{}}
+                    transactionType={'Expense'}
                 /> 
             </View>
            

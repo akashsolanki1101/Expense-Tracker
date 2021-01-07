@@ -10,7 +10,7 @@ const useStyles = ()=>{
     return(
         StyleSheet.create({
             container:{
-                width:'90%',
+                width:'92%',
                 height:250,
                 borderRadius:20,
                 flexDirection:'row',

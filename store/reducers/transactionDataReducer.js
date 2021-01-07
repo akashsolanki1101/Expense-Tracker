@@ -1,11 +1,5 @@
 const initialState = {
-    expenseData:[{
-        id:'1345',
-        category:'Food',
-        particular:'Pizza',
-        amount:200,
-        date:'12/12/2020'
-    }],
+    expenseData:[],
     incomeData:[]
 }
 
