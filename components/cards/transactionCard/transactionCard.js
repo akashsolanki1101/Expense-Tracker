@@ -37,15 +37,11 @@ const useStyles = ()=>{
             },
             spendingInfoContainer:{
                 flexDirection:'row',
-                // borderWidth:2,
-                // borderColor:'white',
                 width:'81%',
                 justifyContent:'space-between'
             },
             spendingPlaceAndCategoryContainer:{
                 width:'70%',
-                borderWidth:1,
-                borderColor:'white'
             },
             placeNameContainer:{
                 overflow:'hidden',

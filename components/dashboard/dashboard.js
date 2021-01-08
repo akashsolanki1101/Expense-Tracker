@@ -173,7 +173,7 @@ export const DashboardPage = ()=>{
                         transparent={true}
                         withInnerLines={true}
                         listenThemeChange={true}
-                        height={330}
+                        height={Dimensions.get("window").height * .50}
                     />
                 </View>
             </View>

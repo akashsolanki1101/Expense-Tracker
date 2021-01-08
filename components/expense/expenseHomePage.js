@@ -43,7 +43,10 @@ const useStyles=()=>{
             menuButtonContainer:{
                 marginRight:10,
                 justifyContent:'space-between',
-                paddingVertical:12
+                paddingVertical:12,
+            },
+            menuButton:{
+                paddingVertical:4,
             },
             middleBlock:{
                 width:'100%',
@@ -172,8 +175,10 @@ export const ExpenseHomePage = ({navigation})=>{
                         <View style={styles.menuButtonContainer}>
                             <TouchableNativeFeedback
                                 onPress={handleShowMenu}
-                            >
-                                <Entypo name='dots-three-vertical' color={theme.theme.primaryText} size={21}/>
+                            >   
+                                <View style={styles.menuButton}>
+                                    <Entypo name='dots-three-vertical' color={theme.theme.primaryText} size={21}/>
+                                </View>
                             </TouchableNativeFeedback>
                         </View>
                     </View>

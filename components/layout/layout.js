@@ -9,10 +9,12 @@ import {StackNavigator} from '../../navigation/navigation'
 import {useTheme} from '../ui/themeContext/themeContext'
 
 const useStyles = ()=>{
+    const theme = useTheme()
     return(
         StyleSheet.create({
             container:{
                 flex:1,
+                backgroundColor : theme.theme.primaryBackground
             }
         })
     )

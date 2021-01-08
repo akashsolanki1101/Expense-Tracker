@@ -18,6 +18,7 @@ const useStyles = ()=>{
                 position:'absolute',
                 top:0,
                 left:0,
+                zIndex:2
             },
             titleContainer:{
                 width:'100%',

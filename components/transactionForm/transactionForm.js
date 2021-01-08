@@ -59,7 +59,8 @@ const useStyles = ()=>{
             responseButtonContainer:{
                 width:'100%',
                 flexDirection:'row',
-                justifyContent:'space-between'
+                justifyContent:'space-between',
+                zIndex:1
             },
             responseButton:{
                 width:'100%',
@@ -148,7 +149,7 @@ export const ExpenseTransactionForm = ({formData,onInputChangeHandler,closeModal
                 }
             </View>
             <View style={styles.responseButtonContainer}>
-                <View style={{width:'40%',borderRadius:10,elevation:10,overflow:'hidden'}}>
+                <View style={{width:'40%',borderRadius:10,elevation:4,overflow:'hidden'}}>
                     <TouchableNativeFeedback
                         onPress={closeModal}
                     >
@@ -157,7 +158,7 @@ export const ExpenseTransactionForm = ({formData,onInputChangeHandler,closeModal
                         </View>
                     </TouchableNativeFeedback>
                 </View>
-                <View style={{width:'40%',borderRadius:10,elevation:10,overflow:'hidden'}}>
+                <View style={{width:'40%',borderRadius:10,elevation:4,overflow:'hidden'}}>
                     <TouchableNativeFeedback
                         onPress={saveTransaction}
                     >

@@ -23,6 +23,10 @@ export const HomeNavigator = ()=>{
         <Tab.Navigator
             tabBarOptions={{
                 activeTintColor:theme.theme.activeColor,
+                style:{
+                    borderTopWidth:1,
+                    borderTopColor:theme.theme.secondaryBackground
+                },
                 tabStyle:{
                     backgroundColor:theme.theme.secondaryBackground,
                     justifyContent:'center',
