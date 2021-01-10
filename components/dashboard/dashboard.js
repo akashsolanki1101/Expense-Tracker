@@ -110,6 +110,10 @@ export const DashboardPage = ()=>{
     const currentPeriodTotalExpense = getCurrentWeekTotalAmount(currentPeriodExpenseTransactionsList,currentPeriodExpenseTransactionsList.length)
     const currentPeriodTotalIncome = getCurrentWeekTotalAmount(currentPeriodIncomeTransactionsList,currentPeriodExpenseTransactionsList.length)
 
+    const amountDiff = currentPeriodTotalIncome - currentPeriodTotalExpense 
+    const remainingBalance = amountDiff > 0 ? `₹ ${amountDiff}` : `- ₹ ${-1 * amountDiff}` 
+
+
     const chartData = [{
         data: currentPeriodExpenseTransactionsList,
         strokeWidth:2,
@@ -125,7 +129,7 @@ export const DashboardPage = ()=>{
             <View style={styles.upperBlock}>
                 <View style={styles.totalAmountContainer}>
                     <Text style={styles.title}>Total</Text>
-                    <Text style={styles.amountText}>₹ {currentPeriodTotalIncome - currentPeriodTotalExpense}</Text>
+                    <Text style={styles.amountText}>{remainingBalance}</Text>
                 </View>
                 <View style={styles.cardsContainer}>
                     <View style={styles.card}>

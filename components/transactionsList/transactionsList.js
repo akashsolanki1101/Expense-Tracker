@@ -33,6 +33,7 @@ export const TransactionsList = ({data,listHeaderComp,handleScroll,transactionTy
             keyExtractor={item=>item.id}
             renderItem={({item})=>
                 <TransactionCard
+                    id={item.id}
                     categoryName={item.category}
                     amount={item.amount}
                     placeName={item.particular}

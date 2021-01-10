@@ -21,7 +21,7 @@ const useStyles = ()=>{
             },
             errorBox:{
                 width:300,
-                height:140,
+                height:155,
                 backgroundColor:theme.theme.secondaryBackground,
                 paddingHorizontal:15,
                 paddingVertical:12,

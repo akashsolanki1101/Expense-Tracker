@@ -14,7 +14,7 @@ const useStyles = ()=>{
         StyleSheet.create({
             container:{
                 flex:1,
-                backgroundColor : theme.theme.primaryBackground
+                backgroundColor:theme.theme.primaryBackground
             }
         })
     )
@@ -23,14 +23,15 @@ const useStyles = ()=>{
 export const Layout = ()=>{
     const styles = useStyles()
     const theme = useTheme()
+    const lightKeys = theme.mode==='light'?true:false
 
     const changeColor = useCallback(async()=>{
         try{
-            const res = await changeNavigationBarColor(theme.theme.secondaryBackground);
+            const res = await changeNavigationBarColor(theme.theme.secondaryBackground,lightKeys);
             console.log(res);
         }catch(e){
             console.log(e);
-        }
+        }   
     },[theme])
 
     useEffect(()=>{

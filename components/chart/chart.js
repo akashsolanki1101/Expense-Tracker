@@ -81,7 +81,8 @@ export const Chart = ({data,transparent,withInnerLines,listenThemeChange,height,
                     y={tooltipPos.y + 10} 
                     width="40" 
                     height="30"
-                    fill="white" 
+                    fill="white"
+                    stroke="black" 
                 />
                 <TextSVG
                     x={tooltipPos.x + 5}

@@ -14,12 +14,30 @@ const reducer = (state=initialState,action)=>{
             }
         }
 
+        case 'DELETE_EXPENSE_TRANSACTION':{
+            const oldData = [...state.expenseData]
+            const updatedData = oldData.filter(item=>item.id!==action.id)
+            return{
+                ...state,
+                expenseData:updatedData
+            }
+        }
+
         case 'ADD_INCOME_TRANSACTION':{
             const oldIncomeData = [...state.incomeData]
             oldIncomeData.splice(0,0,action.data)
             return{
                 ...state,
                 incomeData:oldIncomeData
+            }
+        }
+
+        case 'DELETE_INCOME_TRANSACTION':{
+            const oldData = [...state.incomeData]
+            const updatedData = oldData.filter(item=>item.id!==action.id)
+            return{
+                ...state,
+                incomeData:updatedData
             }
         }
 

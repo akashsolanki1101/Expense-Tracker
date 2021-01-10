@@ -9,6 +9,7 @@ import {ExpenseTransactionForm} from '../transactionForm/transactionForm'
 import {CategoryListDropDown} from '../categoryListDropDown/categoryListDropDown'
 import {addIncomeTransaction} from '../../store/actions/transactionDataActions'
 import {addExpenseTransaction} from '../../store/actions/transactionDataActions'
+import {ErrorBox} from '../errorBox/errorBox'
 
 const useStyles = ()=>{
     const theme = useTheme()
@@ -53,12 +54,11 @@ const useStyles = ()=>{
                 width:'90%',
                 borderWidth:2,
                 backgroundColor:theme.theme.primaryBackground,
-                borderColor:theme.theme.secondaryBackground,
+                borderColor:theme.theme.secondaryText,
                 flexDirection:'row',
                 justifyContent:'space-between',
                 padding:8,
                 borderRadius:50,
-                elevation:2
             },
             buttonCover:{
                 overflow:'hidden',
@@ -104,6 +104,8 @@ const useStyles = ()=>{
 export const AddTransactionPage = ({closeModal,transactionTyppe})=>{
     const [transactionType,setTransactionType] = useState(transactionTyppe)
     const [showCategoryList,setShowCategoryList] = useState(false)
+    const [showErrorBox,setShowErrorBox] = useState(false)
+    const [errMessage,setErrMessage] = useState('')
     const [formData,setFormData] = useState({
         date:'',
         amount:'',
@@ -128,6 +130,14 @@ export const AddTransactionPage = ({closeModal,transactionTyppe})=>{
         setShowCategoryList(false)
     }
 
+    const handleCloseErrorBox = ()=>{
+        setShowErrorBox(false)
+    }
+
+    const handleOpenErrorBox = ()=>{
+        setShowErrorBox(true)
+    }
+
     const onInputChangeHandler = (value,data_type)=>{
         const updatedData = {...formData}
         updatedData[data_type] = value;
@@ -139,6 +149,20 @@ export const AddTransactionPage = ({closeModal,transactionTyppe})=>{
     }
 
     const handleOnSaveClick = ()=>{
+        const dateFormat = /^((0)[1-9]|[1-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/
+        
+        if(!formData.date.match(dateFormat)){
+            setErrMessage('Please enter a valid date in the mentioned format.')
+            handleOpenErrorBox()
+            return
+        }
+
+        if(formData.category===''&&transactionType==='Expense'){
+            setErrMessage('Please select a category.')
+            handleOpenErrorBox()
+            return
+        }
+
         const currDate = new Date()
         const timeStamp = currDate.getTime()
         if(transactionType==='Expense'){
@@ -235,6 +259,13 @@ export const AddTransactionPage = ({closeModal,transactionTyppe})=>{
                 <CategoryListDropDown
                     onSelect = {onInputChangeHandler}
                     closeCategoryList={handleCloseCategoryList}
+                />
+            }
+            {
+                showErrorBox&&
+                <ErrorBox 
+                    closeDialogBox={handleCloseErrorBox}
+                    message={errMessage}
                 />
             }
         </View>

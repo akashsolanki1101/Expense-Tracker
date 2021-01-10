@@ -19,7 +19,7 @@ const useStyles = ()=>{
                 paddingHorizontal:10,
             },
             leftBlock:{
-                width:'70%',
+                width:'72%',
             },
             categoryNameContainer:{
                 width:'100%'
@@ -42,7 +42,7 @@ const useStyles = ()=>{
                 height:120,
             },
             rightBlock:{
-                width:'30%',
+                width:'28%',
                 justifyContent:'flex-end',   
                 alignItems:'flex-end',
                 paddingRight:15
@@ -61,7 +61,7 @@ const useStyles = ()=>{
     )
 }
 
-export const CategoryCard = ({categoryName,style,style1,onClick})=>{
+export const CategoryCard = ({categoryName,style,style1,onClick,showPercentage,percentage})=>{
     const styles = useStyles()
 
     return(
@@ -72,17 +72,23 @@ export const CategoryCard = ({categoryName,style,style1,onClick})=>{
                 <View style={styles.leftBlock}>
                     <View style={styles.categoryNameContainer}>
                         <Text style={styles.categoryNameText}>{categoryName}</Text>
-                        <Text style={styles.categorySpendingsPercent}>spent 48%</Text>
+                        {
+                            showPercentage&&
+                            <Text style={styles.categorySpendingsPercent}>spent {percentage}%</Text>
+                        }
                     </View>
                     <View style={styles.categoryImageContainer}>
                         <Image style={{...styles.categoryImage,...style1}} source={CategoriesItemsData[categoryName].imgUrl}/>
                     </View>
                 </View>
-                <View style={styles.rightBlock}>
-                    <View style={{...styles.percentageBarBackground,backgroundColor:CategoriesItemsData[categoryName].percentageBar1}}>
-                        <View style={{...styles.percentageBarForeground,backgroundColor:CategoriesItemsData[categoryName].percentageBar2,height:`48%`}}></View>
+                {
+                    showPercentage&&
+                    <View style={styles.rightBlock}>
+                        <View style={{...styles.percentageBarBackground,backgroundColor:CategoriesItemsData[categoryName].percentageBar1}}>
+                            <View style={{...styles.percentageBarForeground,backgroundColor:CategoriesItemsData[categoryName].percentageBar2,height:`${percentage}%`}}></View>
+                        </View>
                     </View>
-                </View>
+                }
             </View>
         </TouchableNativeFeedback>
     )

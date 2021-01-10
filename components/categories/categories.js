@@ -20,6 +20,7 @@ const useStyles = ()=>{
             },
             categoryCardStyle:{
                 width:'45%',
+                height:200,
                 marginVertical:10,
                 marginHorizontal:'2.5%'
             },
@@ -55,6 +56,7 @@ export const CategoriesPage = ({navigation})=>{
                                 style={styles.categoryCardStyle}
                                 style1={styles.categoryIconStyle}
                                 onClick={handleCategoryCardClick}
+                                showPercentage={false}
                             />
                         )
                     }}

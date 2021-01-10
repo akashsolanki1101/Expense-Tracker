@@ -2,14 +2,16 @@ const getCurrentWeekDates = ()=>{
     const currDate = new Date
     const week = []
 
+
     for(let i=1;i<=7;i++){
-        const day = currDate.getDate() - currDate.getDay() + i;
+        const temp = currDate.getDay()===0 ? 7 : currDate.getDay()
+        const day = currDate.getDate() - temp + i;
         const newDate = new Date(currDate.setDate(day)).toISOString().slice(0,10)
         const parts = newDate.split('-')
         const finalDateFormat = `${parts[2]}/${parts[1]}/${parts[0]}`
         week.push(finalDateFormat)
     }
-
+    // console.log(week);
     return week
 }
 

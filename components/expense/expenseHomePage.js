@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 
-import {View,Text,StyleSheet,TouchableNativeFeedback,TouchableWithoutFeedback,FlatList,Modal} from 'react-native'
+import {View,Text,StyleSheet,TouchableWithoutFeedback,Modal} from 'react-native'
 import Entypo from 'react-native-vector-icons/Entypo'
 import {useSelector} from 'react-redux'
 
@@ -41,7 +41,7 @@ const useStyles=()=>{
                 fontWeight:'bold',
             },
             menuButtonContainer:{
-                marginRight:10,
+                marginRight:5,
                 justifyContent:'space-between',
                 paddingVertical:12,
             },
@@ -173,13 +173,13 @@ export const ExpenseHomePage = ({navigation})=>{
                             <Text style={styles.nameText}>{userName}</Text>
                         </View>
                         <View style={styles.menuButtonContainer}>
-                            <TouchableNativeFeedback
+                            <TouchableWithoutFeedback
                                 onPress={handleShowMenu}
                             >   
                                 <View style={styles.menuButton}>
                                     <Entypo name='dots-three-vertical' color={theme.theme.primaryText} size={21}/>
                                 </View>
-                            </TouchableNativeFeedback>
+                            </TouchableWithoutFeedback>
                         </View>
                     </View>
                     <View style={styles.statsContainer}>

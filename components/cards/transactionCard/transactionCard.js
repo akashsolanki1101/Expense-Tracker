@@ -1,17 +1,20 @@
 import React from 'react'
 
-import {View,Text,StyleSheet,Image} from 'react-native'
+import {View,Text,StyleSheet,Image,TouchableOpacity} from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import Swipeable from 'react-native-gesture-handler/Swipeable'
+import {useDispatch} from 'react-redux'
 
 import {useTheme} from "../../ui/themeContext/themeContext"
 import {CategoriesItemsData} from '../../../data/categoriesItemsData/categoriesItemsData'
+import {deleteExpenseTransaction,deleteIncomeTransaction} from '../../../store/actions/transactionDataActions'
 
 const useStyles = ()=>{
     const theme = useTheme()
     return(
         StyleSheet.create({
             container:{
-                width:'100%',
+                width:'99%',
                 backgroundColor:theme.theme.secondaryBackground,
                 borderRadius:15,
                 height:70,
@@ -45,7 +48,6 @@ const useStyles = ()=>{
             },
             placeNameContainer:{
                 overflow:'hidden',
-
             },
             placeNameText:{
                 color:theme.theme.primaryText,
@@ -53,7 +55,6 @@ const useStyles = ()=>{
                 fontWeight:'bold',
                 textTransform:'capitalize'
             },
-            categoryNameContainer:{},
             categoryName:{
                 color:theme.theme.secondaryText,
                 textTransform:'capitalize'
@@ -62,22 +63,38 @@ const useStyles = ()=>{
                 alignItems:'flex-end',
                 justifyContent:'center'
             },
-            amountContainer:{},
             amountText:{
                 color:theme.theme.primaryText,
                 fontWeight:'bold'
             },
-            dateContainer:{},
             dateText:{
                 color:theme.theme.secondaryText,
             },
+            swipeableChildContainer:{
+                width:'100%',
+                justifyContent:'center',
+                alignItems:'center'
+            },
+            trashIconContainer: {
+                height:'100%',
+                width:50,
+                justifyContent: 'center',
+                alignItems: 'center',
+            },
+            trashIcon:{
+                width:50,
+                height:70,
+                justifyContent:'center',
+                alignItems:'center'
+            }
         })
     )
 }
 
-export const TransactionCard = ({categoryName,placeName,amount,date,transactionType})=>{
+export const TransactionCard = ({id,categoryName,placeName,amount,date,transactionType})=>{
     const styles = useStyles()
     const theme = useTheme()
+    const dispatch = useDispatch()
     const mode = theme.mode
     const finalAmount = transactionType==='Expense'?`- ₹ ${amount}`:`₹ ${amount}`
     let imageUrl
@@ -86,33 +103,61 @@ export const TransactionCard = ({categoryName,placeName,amount,date,transactionT
         imageUrl = mode==='dark'?CategoriesItemsData[categoryName].iconDark:CategoriesItemsData[categoryName].iconLight
     }
 
+    const handleOnDeleteButtonClick = ()=>{
+        if(transactionType==='Expense'){
+            dispatch(deleteExpenseTransaction(id))
+        }else if(transactionType==='Income'){
+            dispatch(deleteIncomeTransaction(id))
+        }
+    }
+
+    const leftSwipe = () => {
+        return (
+            <View style={styles.trashIconContainer}>
+                <TouchableOpacity 
+                    onPress={handleOnDeleteButtonClick} 
+                    activeOpacity={0.6}
+                >
+                    <View style={styles.trashIcon}>
+                        <FontAwesome name='trash' color={theme.theme.activeColor} size={26}/>
+                    </View>
+                </TouchableOpacity>
+            </View>
+        );
+    };
+
     return(
-        <View style={styles.container}>
-            <View style={styles.categoryIconContainer}>
-            {
-                transactionType==='Expense'
-                ?<Image style={styles.categoryIcon} source={imageUrl}/>
-                :<FontAwesome name="rupee" size={26} color={theme.theme.activeColor}/>
-            }
-            </View>
-            <View style={styles.spendingInfoContainer}>
-                <View style={styles.spendingPlaceAndCategoryContainer}>
-                    <View style={styles.placeNameContainer}> 
-                        <Text numberOfLines={1} style={styles.placeNameText}>{placeName}</Text>
+        <Swipeable
+            renderLeftActions={leftSwipe}
+            childrenContainerStyle={styles.swipeableChildContainer}
+        >
+            <View style={styles.container}>
+                <View style={styles.categoryIconContainer}>
+                {
+                    transactionType==='Expense'
+                    ?<Image style={styles.categoryIcon} source={imageUrl}/>
+                    :<FontAwesome name="rupee" size={26} color={theme.theme.activeColor}/>
+                }
+                </View>
+                <View style={styles.spendingInfoContainer}>
+                    <View style={styles.spendingPlaceAndCategoryContainer}>
+                        <View style={styles.placeNameContainer}> 
+                            <Text numberOfLines={1} style={styles.placeNameText}>{placeName}</Text>
+                        </View>
+                        <View style={styles.categoryNameContainer}> 
+                            <Text style={styles.categoryName}>{categoryName}</Text>
+                        </View>
                     </View>
-                    <View style={styles.categoryNameContainer}> 
-                        <Text style={styles.categoryName}>{categoryName}</Text>
+                    <View style={styles.amountAndDateContainer}>
+                        <View style={styles.amountContainer}>
+                            <Text style={styles.amountText}>{finalAmount}</Text>
+                        </View>
+                        <View style={styles.dateContainer}>
+                            <Text style={styles.dateText}>{date}</Text>
+                        </View>
                     </View>
                 </View>
-                <View style={styles.amountAndDateContainer}>
-                    <View style={styles.amountContainer}>
-                        <Text style={styles.amountText}>{finalAmount}</Text>
-                    </View>
-                    <View style={styles.dateContainer}>
-                        <Text style={styles.dateText}>{date}</Text>
-                    </View>
-                </View>
             </View>
-        </View>
+        </Swipeable>
     )
 } 
