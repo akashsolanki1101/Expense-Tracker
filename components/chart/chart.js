@@ -73,13 +73,40 @@ export const Chart = ({data,transparent,withInnerLines,listenThemeChange,height,
         setTooltipPos({ x: data.x, value: data.value, y: data.y, visible: true });
     }
 
+    const changeYlabel = (string)=>{
+        const length = string.length
+        const num  = Number(string)
+        let modifiedLabel = string
+
+        if(length>3 && length<6)    
+        {  
+            modifiedLabel = num / 1000;
+            modifiedLabel = `${modifiedLabel}k`
+        }
+
+        if(length>5 && length<8)    
+        {  
+            modifiedLabel = num / 100000;
+            modifiedLabel = `${modifiedLabel}L`
+        }
+
+        if(length>7)    
+        {  
+            modifiedLabel = num / 10000000;
+            modifiedLabel = `${modifiedLabel}cr`
+        }
+
+
+        return modifiedLabel
+    }
+
     const toolTip = ()=>{
         return tooltipPos.visible ? <View>
             <Svg>
                 <Rect 
                     x={tooltipPos.x - 15} 
                     y={tooltipPos.y + 10} 
-                    width="40" 
+                    width="40"
                     height="30"
                     fill="white"
                     stroke="black" 
@@ -124,6 +151,7 @@ export const Chart = ({data,transparent,withInnerLines,listenThemeChange,height,
                 decorator={toolTip}
                 onDataPointClick={handleClickOnDataPoint}
                 segments={5}
+                formatYLabel={changeYlabel}
             />
         </View>
     )

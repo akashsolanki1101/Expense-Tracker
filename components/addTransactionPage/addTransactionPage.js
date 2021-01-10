@@ -166,7 +166,7 @@ export const AddTransactionPage = ({closeModal,transactionTyppe})=>{
         const currDate = new Date()
         const timeStamp = currDate.getTime()
         if(transactionType==='Expense'){
-            const amount = parseInt(formData.amount)
+            const amount = Number(formData.amount)
             const data = {
                 id:timeStamp.toString(),
                 amount : amount,
@@ -176,7 +176,7 @@ export const AddTransactionPage = ({closeModal,transactionTyppe})=>{
             }
             dispatch(addExpenseTransaction(data))
         }else{
-            const amount = parseInt(formData.amount)
+            const amount = Number(formData.amount)
             const data = {
                 id : timeStamp.toString(),
                 amount : amount,

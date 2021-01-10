@@ -27,7 +27,7 @@ const useStyles = ()=>{
             },
             dropDownContainer:{
                 width:350,
-                height:250,
+                height:255,
                 backgroundColor:theme.theme.secondaryBackground,
             },
             titleTextContainer:{
@@ -59,7 +59,7 @@ const useStyles = ()=>{
                 flexDirection:'row',
                 justifyContent:'space-between',
                 paddingHorizontal:18,
-                marginTop:5
+                paddingVertical:8,
             },
             responseButton:{
                 paddingVertical:6,
