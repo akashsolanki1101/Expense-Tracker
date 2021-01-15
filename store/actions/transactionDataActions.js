@@ -1,3 +1,11 @@
+export const setTransactions = (expenseData,incomeData)=>{
+    return{
+        type:'SET_TRANSACTIONS',
+        expenseData,
+        incomeData
+    }
+}
+
 export const addExpenseTransaction = (data)=>{
     return{
         type:'ADD_EXPENSE_TRANSACTION',

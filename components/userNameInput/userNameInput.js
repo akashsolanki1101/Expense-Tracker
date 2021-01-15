@@ -2,9 +2,11 @@ import React,{useState} from 'react'
 
 import {View,Text,TextInput,StyleSheet,TouchableWithoutFeedback,TouchableNativeFeedback,ToastAndroid} from 'react-native'
 import {useSelector,useDispatch} from 'react-redux'
+import {openDatabase} from 'react-native-sqlite-storage'
 
 import {useTheme} from '../ui/themeContext/themeContext'
 import {updateUserName} from '../../store/actions/userInfoActions'
+import {ErrorBox} from '../errorBox/errorBox'
 
 const useStyles = ()=>{
     const theme = useTheme()
@@ -70,10 +72,14 @@ const useStyles = ()=>{
     )
 }
 
+const db = openDatabase({name:'ExpenseTracker.db',location:'Documents'})
+
 export const NameInput = ({closeEditor})=>{
     const styles = useStyles()
     const name = useSelector(state=>state.user.name)
+    const userId = useSelector(state=>state.user.id)
     const [userName,setUserName] = useState(name)
+    const [showErrBox,setShowErrBox] = useState(false)
     const [lengthLimit,setLengthLimit] = useState(10-userName.length)
 
     const dispatch = useDispatch()
@@ -83,13 +89,34 @@ export const NameInput = ({closeEditor})=>{
             setLengthLimit(10-value.length)
     }
 
+    const handleOpenErrBox = ()=>{
+        setShowErrBox(true)
+    }
+
+    const handleCloseErrBox = ()=>{
+        setShowErrBox(false)
+    }
+
     const handleSaveButtonClick = ()=>{
         if(userName.length===0){
             showToastWithGravity()
             return
         }else{
-            dispatch(updateUserName(userName))
-            closeEditor()
+            db.transaction(txn=>{
+                txn.executeSql(
+                    `UPDATE user SET name = ${userName} WHERE id = ${userId}`,
+                    [],
+                    (_,results)=>{
+                        console.log(results.rows);
+                        if(results.rowsAffected>0){
+                            dispatch(updateUserName(userName))
+                            closeEditor()
+                        }else{
+                            handleOpenErrBox()
+                        }
+                    }
+                )
+            })
         }
     }
 
@@ -134,7 +161,14 @@ export const NameInput = ({closeEditor})=>{
                         </View>    
                     </View>
                 </TouchableWithoutFeedback>
-                </View>
+                {
+                    showErrBox&&
+                    <ErrorBox
+                        message="Unable to store data. Please try again."
+                        closeDialogBox={handleCloseErrBox}
+                    />
+                }
+            </View>
         </TouchableWithoutFeedback>
     )
 } 

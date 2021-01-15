@@ -1,9 +1,10 @@
-import React from 'react'
+import React,{useState} from 'react'
 
-import {View,Text,StyleSheet,Image,TouchableOpacity} from 'react-native'
+import {View,Text,StyleSheet,Image,TouchableOpacity,Alert} from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import {useDispatch} from 'react-redux'
+import {openDatabase} from 'react-native-sqlite-storage'
 
 import {useTheme} from "../../ui/themeContext/themeContext"
 import {CategoriesItemsData} from '../../../data/categoriesItemsData/categoriesItemsData'
@@ -91,11 +92,14 @@ const useStyles = ()=>{
     )
 }
 
+const db = openDatabase({name:'ExpenseTracker.db',location:'Documents'})
+
 export const TransactionCard = ({id,categoryName,placeName,amount,date,transactionType})=>{
     const styles = useStyles()
     const theme = useTheme()
     const dispatch = useDispatch()
     const mode = theme.mode
+    const [showErrBox,setShowErrBox] = useState(false)
     const finalAmount = transactionType==='Expense'?`- ₹ ${amount}`:`₹ ${amount}`
     let imageUrl
 
@@ -103,12 +107,57 @@ export const TransactionCard = ({id,categoryName,placeName,amount,date,transacti
         imageUrl = mode==='dark'?CategoriesItemsData[categoryName].iconDark:CategoriesItemsData[categoryName].iconLight
     }
 
+    const hadleShowErrBox = ()=>{
+        setShowErrBox(true)
+    }
+
+    const hadleCloseErrBox = ()=>{
+        setShowErrBox(false)
+    }
+
     const handleOnDeleteButtonClick = ()=>{
-        if(transactionType==='Expense'){
-            dispatch(deleteExpenseTransaction(id))
-        }else if(transactionType==='Income'){
-            dispatch(deleteIncomeTransaction(id))
-        }
+        Alert.alert(
+            'Warning!',
+            'Item will be deleted permanently.',
+            [
+                {
+                    text:'OK',
+                    style:'default',
+                    onPress:()=>{
+                        db.transaction(txn=>{
+                        txn.executeSql(
+                            `DELETE FROM transactions WHERE id = ${id}`,
+                            [],
+                            (_,results)=>{
+                                if(results.rowsAffected>0){
+                                    if(transactionType==='Expense'){
+                                        dispatch(deleteExpenseTransaction(id))
+                                    }else if(transactionType==='Income'){
+                                        dispatch(deleteIncomeTransaction(id))
+                                    }
+                                    }else{
+                                        Alert.alert(
+                                            'Error',
+                                            'Unable to delete item. Please try again.',
+                                            [
+                                                {
+                                                    text:'OK',
+                                                    style:'cancel'
+                                                }
+                                            ]
+                                        )
+                                    }
+                                }
+                            )
+                        })
+                    }
+                },
+                {
+                    text:'CANCEL',
+                    style:'cancel',
+                }
+            ]
+        )
     }
 
     const leftSwipe = () => {

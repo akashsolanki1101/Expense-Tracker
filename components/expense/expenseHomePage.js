@@ -3,6 +3,7 @@ import React,{useState} from 'react'
 import {View,Text,StyleSheet,TouchableWithoutFeedback,Modal} from 'react-native'
 import Entypo from 'react-native-vector-icons/Entypo'
 import {useSelector} from 'react-redux'
+import {openDatabase} from 'react-native-sqlite-storage'
 
 import {useTheme} from '../ui/themeContext/themeContext'
 import {Chart} from '../chart/chart'
@@ -11,6 +12,7 @@ import {PopUp} from '../popUp/popUp'
 import {AddTransactionPage} from '../addTransactionPage/addTransactionPage'
 import {TransactionsList} from '../transactionsList/transactionsList'
 import {getCurrentWeekData,getCurrentYearData,getCurrentWeekTotalAmount} from '../../dataExtractor/dataExtractor'
+
 
 const useStyles=()=>{
     const theme = useTheme()
@@ -97,6 +99,8 @@ const useStyles=()=>{
     )
 }
 
+const db = openDatabase({name:'ExpenseTracker.db',location:'Documents'})
+
 export const ExpenseHomePage = ({navigation})=>{
     const styles = useStyles()
     const theme = useTheme()
@@ -113,8 +117,6 @@ export const ExpenseHomePage = ({navigation})=>{
         strokeWidth:2,
         color:(opacity=1)=>`rgba(255,255,255,0.8)`,
     }]
-
-    // getCurrentYearData()
     
     const handleShowMenu = ()=>{
         setShowMenuPopUp(true)

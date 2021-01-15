@@ -5,6 +5,14 @@ const initialState = {
 
 const reducer = (state=initialState,action)=>{
     switch(action.type){
+        case 'SET_TRANSACTIONS':{
+            return{
+                ...state,
+                expenseData:action.expenseData,
+                incomeData:action.incomeData
+            }
+        }
+
         case 'ADD_EXPENSE_TRANSACTION':{
             const oldExpenseData = [...state.expenseData]
             oldExpenseData.splice(0,0,action.data)

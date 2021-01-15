@@ -1,10 +1,20 @@
 const initialState = {
-    name:'Friend',
+    id:'',
+    name:'',
     themeFormat:'Dark'
 }
 
 const reducer = (state=initialState,action)=>{
     switch(action.type){
+        case 'SET_USER_DATA':{
+            return{
+                ...state,
+                id:action.id,
+                name:action.name,
+                themeFormat:action.themeFormat
+            }
+        }
+
         case 'UPDATE_USER_NAME':
             return{
                 ...state,

@@ -3,6 +3,7 @@ import React,{useState} from 'react'
 import {View,Text,StyleSheet,TouchableNativeFeedback} from 'react-native'
 import {useDispatch} from 'react-redux'
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import {openDatabase} from 'react-native-sqlite-storage'
 
 import {useTheme} from '../ui/themeContext/themeContext'
 import {ExpenseTransactionForm} from '../transactionForm/transactionForm'
@@ -101,6 +102,8 @@ const useStyles = ()=>{
     )
 }
 
+const db = openDatabase({name:'ExpenseTracker.db',location:'Documents'})
+
 export const AddTransactionPage = ({closeModal,transactionTyppe})=>{
     const [transactionType,setTransactionType] = useState(transactionTyppe)
     const [showCategoryList,setShowCategoryList] = useState(false)
@@ -164,29 +167,56 @@ export const AddTransactionPage = ({closeModal,transactionTyppe})=>{
         }
 
         const currDate = new Date()
-        const timeStamp = currDate.getTime()
+        const timeStamp = currDate.getTime().toString()
         if(transactionType==='Expense'){
             const amount = Number(formData.amount)
             const data = {
-                id:timeStamp.toString(),
+                id:timeStamp,
                 amount : amount,
                 category : formData.category,
                 date : formData.date,
                 particular : formData.particular
             }
-            dispatch(addExpenseTransaction(data))
+            db.transaction(txn=>{
+                txn.executeSql(
+                    'INSERT INTO transactions (id,category,amount,date,particular) VALUES (?,?,?,?,?)',
+                    [data.id,data.category,data.amount,data.date,data.particular],
+                    (_,results)=>{
+                        if(results.rowsAffected>0){
+                            dispatch(addExpenseTransaction(data))
+                            closeModal()
+                        }else{
+                            setErrMessage('Unable to store transaction in local storage. Please try again.')
+                            setShowErrorBox(true)
+                        }
+                    }
+                )
+            })
         }else{
             const amount = Number(formData.amount)
             const data = {
-                id : timeStamp.toString(),
+                id : timeStamp,
                 amount : amount,
                 date : formData.date,
                 particular : formData.miscellaneous,
                 category:'Income'
             }
-            dispatch(addIncomeTransaction(data))
+            db.transaction(txn=>{
+                txn.executeSql(
+                    'INSERT INTO transactions (id,category,amount,date,particular) VALUES (?,?,?,?,?)',
+                    [data.id,data.category,data.amount,data.date,data.particular],
+                    (_,results)=>{
+                        if(results.rowsAffected>0){
+                            dispatch(addIncomeTransaction(data))
+                            closeModal()
+                        }else{
+                            setErrMessage('Unable to store transaction in local storage. Please try again.')
+                            setShowErrorBox(true)
+                        }
+                    }
+                )
+            })
         }
-        closeModal()
     }
 
     return(

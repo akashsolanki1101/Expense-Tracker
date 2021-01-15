@@ -4,11 +4,13 @@ import {View,Text,StyleSheet,TouchableWithoutFeedback,TouchableNativeFeedback} f
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import {Appearance} from 'react-native-appearance'
 import {useDispatch,useSelector} from 'react-redux'
+import {openDatabase} from 'react-native-sqlite-storage'
 
 import {useTheme} from '../ui/themeContext/themeContext'
 import {dark} from '../ui/theme/darkTheme'
 import {light} from '../ui/theme/lightTheme'
 import {updateUserThemeFormat} from '../../store/actions/userInfoActions'
+import {ErrorBox} from '../errorBox/errorBox'
 
 const useStyles = ()=>{
     const theme = useTheme()
@@ -73,17 +75,29 @@ const useStyles = ()=>{
     )
 }
 
+const db = openDatabase({name:'ExpenseTracker.db',location:'Documents'})
+
 export const SelectThemeDropDown = ({closeDropDown})=>{
     const styles = useStyles()
     const theme = useTheme()
     const themeFormat = useSelector(state=>state.user.themeFormat)
+    const userId = useSelector(state=>state.user.id)
     const dispatch = useDispatch()
 
+    const [showErrBox,setShowErrBox] = useState(false)
     const [mode,setMode] = useState({
         systemDefault:themeFormat==='System default'?true:false,
         dark:themeFormat==='Dark'?true:false,
         light:themeFormat==='Light'?true:false        
     })
+
+    const handleShowErrBox = ()=>{
+        setShowErrBox(true)
+    }
+
+    const handleCloseErrBox = ()=>{
+        setShowErrBox(false)
+    }
 
     const handleOptionButtonClick = (option)=>{
         const newState = {
@@ -95,28 +109,65 @@ export const SelectThemeDropDown = ({closeDropDown})=>{
         setMode(newState)
     }
 
-    const handleOkButtonClick = ()=>{
+    const handleOkButtonClick = ()=>{      
         if(mode.systemDefault){
-                const colorScheme = Appearance.getColorScheme()
-                console.log(colorScheme);
-                if(colorScheme==='dark'){
-                    theme.setMode('dark')
-                    theme.setTheme(dark.theme)
-                }else{
-                    theme.setMode('light')
-                    theme.setTheme(light.theme)
-                }
-                dispatch(updateUserThemeFormat('System default'))
+            const colorScheme = Appearance.getColorScheme()
+            db.transaction(txn=>{
+                txn.executeSql(
+                    `UPDATE user SET theme = 'System default' WHERE id = ${userId}`,
+                    [],
+                    (_,results)=>{
+                        if(results.rowsAffected>0){
+                            if(colorScheme==='dark'){
+                                theme.setMode('dark')
+                                theme.setTheme(dark.theme)
+                            }else{
+                                theme.setMode('light')
+                                theme.setTheme(light.theme)
+                            }
+                            dispatch(updateUserThemeFormat('System default'))
+                            closeDropDown()
+                        }else{
+                            handleShowErrBox();
+                        }
+                    }
+                )
+            })
         }else if(mode.light){
-            theme.setMode('light')
-            theme.setTheme(light.theme)
-            dispatch(updateUserThemeFormat('Light'))
+            db.transaction(txn=>{
+                txn.executeSql(
+                    `UPDATE user SET theme = 'Light' WHERE id = ${userId}`,
+                    [],
+                    (_,results)=>{
+                        if(results.rowsAffected>0){
+                            theme.setMode('light')
+                            theme.setTheme(light.theme)
+                            dispatch(updateUserThemeFormat('Light'))
+                            closeDropDown()
+                        }else{
+                            handleShowErrBox();
+                        }
+                    }
+                )
+            })
         }else if(mode.dark){
-            theme.setMode('dark')
-            theme.setTheme(dark.theme)
-            dispatch(updateUserThemeFormat('Dark'))
+            db.transaction(txn=>{
+                txn.executeSql(
+                    `UPDATE user SET theme = 'Dark' WHERE id = ${userId}`,
+                    [],
+                    (_,results)=>{
+                        if(results.rowsAffected>0){
+                            theme.setMode('dark')
+                            theme.setTheme(dark.theme)
+                            dispatch(updateUserThemeFormat('Dark'))
+                            closeDropDown()
+                        }else{
+                            handleShowErrBox();
+                        }
+                    }
+                )
+            })
         }
-        closeDropDown()
     }
 
     return (
@@ -187,6 +238,13 @@ export const SelectThemeDropDown = ({closeDropDown})=>{
                         </View>
                     </View>
                 </TouchableWithoutFeedback>
+                {
+                    showErrBox&&
+                    <ErrorBox
+                        message='Unable to store data. Please try again.'
+                        closeDialogBox={handleCloseErrBox}
+                    />
+                }
             </View>
         </TouchableWithoutFeedback>
     )

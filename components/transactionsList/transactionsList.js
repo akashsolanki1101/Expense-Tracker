@@ -27,10 +27,11 @@ export const TransactionsList = ({data,listHeaderComp,handleScroll,transactionTy
 
     const listEmptyComp = <Text style={styles.messageText}>No transaction found!</Text>
 
+
     return(
         <FlatList
             data={data}
-            keyExtractor={item=>item.id}
+            keyExtractor={item=>item.id.toString()}
             renderItem={({item})=>
                 <TransactionCard
                     id={item.id}
