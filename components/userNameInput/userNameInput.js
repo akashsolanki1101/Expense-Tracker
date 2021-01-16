@@ -104,10 +104,9 @@ export const NameInput = ({closeEditor})=>{
         }else{
             db.transaction(txn=>{
                 txn.executeSql(
-                    `UPDATE user SET name = ${userName} WHERE id = ${userId}`,
+                    `UPDATE user SET name = '${userName}' WHERE id = ${userId}`,
                     [],
                     (_,results)=>{
-                        console.log(results.rows);
                         if(results.rowsAffected>0){
                             dispatch(updateUserName(userName))
                             closeEditor()

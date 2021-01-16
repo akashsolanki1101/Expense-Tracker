@@ -20,12 +20,14 @@ const Tab = createBottomTabNavigator()
 export const HomeNavigator = ()=>{
     const theme = useTheme()
     return(
-        <Tab.Navigator
+        <Tab.Navigator 
             tabBarOptions={{
                 activeTintColor:theme.theme.activeColor,
                 style:{
                     borderTopWidth:1,
-                    borderTopColor:theme.theme.secondaryBackground
+                    borderTopColor:theme.theme.secondaryBackground,
+                    backgroundColor:theme.theme.secondaryBackground,
+
                 },
                 tabStyle:{
                     backgroundColor:theme.theme.secondaryBackground,
