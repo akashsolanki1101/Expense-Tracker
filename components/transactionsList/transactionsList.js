@@ -1,9 +1,11 @@
 import React from 'react'
 
-import {View,FlatList,Text,StyleSheet} from 'react-native'
+import {View,Text,StyleSheet,SectionList} from 'react-native'
+import {useSelector} from 'react-redux'
 
 import {TransactionCard} from '../cards/transactionCard/transactionCard'
 import {useTheme} from '../ui/themeContext/themeContext'
+import {formatData} from '../../dataExtractor/dataExtractor'
 
 const useStyles = ()=>{
     const theme = useTheme()
@@ -17,6 +19,15 @@ const useStyles = ()=>{
                 color:theme.theme.secondaryText,
                 textAlign:'center',
                 marginTop:30
+            },
+            sectionTitleContainer:{
+                paddingHorizontal:5,
+                // paddingVertical:4,
+                marginTop:4
+            },
+            sectionTitle:{
+                color:theme.theme.secondaryText,
+                fontSize:20,
             }
         })
     )
@@ -25,14 +36,17 @@ const useStyles = ()=>{
 export const TransactionsList = ({data,listHeaderComp,handleScroll,transactionType})=>{
     const styles = useStyles()
 
+    const currPeriodType = useSelector(state=>state.period.period)
+
     const listEmptyComp = <Text style={styles.messageText}>No transaction found!</Text>
 
+    const formattedData = formatData(data,data.length,currPeriodType)
 
     return(
-        <FlatList
-            data={data}
-            keyExtractor={item=>item.id.toString()}
-            renderItem={({item})=>
+        <SectionList
+            sections={formattedData}
+            keyExtractor={(item, index) => item + index}
+            renderItem={({ item }) => 
                 <TransactionCard
                     id={item.id}
                     categoryName={item.category}
@@ -42,9 +56,21 @@ export const TransactionsList = ({data,listHeaderComp,handleScroll,transactionTy
                     transactionType={transactionType}
                 />
             }
+            renderSectionHeader={({ section: { title ,data} }) =>{
+                    if(data.length===0){
+                        return null
+                    }
+                    return(
+                        <View style={styles.sectionTitleContainer}>
+                            <Text style={styles.sectionTitle}>{title}</Text>
+                        </View>
+                    )
+                }
+            }
             ListHeaderComponent={listHeaderComp}
             ListEmptyComponent={listEmptyComp}
             onScroll={handleScroll}
+            stickySectionHeadersEnabled={true}
         />
     )
 }

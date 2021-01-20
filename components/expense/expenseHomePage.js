@@ -11,7 +11,7 @@ import {AddTransactionButton} from '../addTransactionButton/addTransactionButton
 import {PopUp} from '../popUp/popUp'
 import {AddTransactionPage} from '../addTransactionPage/addTransactionPage'
 import {TransactionsList} from '../transactionsList/transactionsList'
-import {getCurrentWeekData,getYearData,getYearStartEndDates,getTotalAmount,getCurrWeekStartEndDates} from '../../dataExtractor/dataExtractor'
+import {getCurrentWeekData,getYearData,getYearStartEndDates,getTotalAmount,getCurrWeekStartEndDates,formatData} from '../../dataExtractor/dataExtractor'
 import {setTransactions} from '../../store/actions/transactionDataActions'
 import {setPeriodData} from '../../store/actions/periodActions'
 import {Loader} from '../loader/loader'
@@ -142,6 +142,21 @@ export const ExpenseHomePage = ({navigation})=>{
     const currPeriodType = useSelector(state=>state.period.period)
 
     let currentPeriodTransactionsList
+
+    const akash = [
+        {
+            id : '1234567895',
+            amount : 500,
+            category: 'Food',
+            date : '21/01/2021',
+            particular : 'Pizza',
+            key : '20210121'
+
+        }
+    ]
+
+    console.log(formatData(akash,akash.length,'week'));
+
 
     if(currPeriodType==='week')
     {

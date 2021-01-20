@@ -120,7 +120,8 @@ const useStyles = ()=>{
                 position:'absolute',
                 right:0,
                 top:4,
-                overflow:'hidden'
+                overflow:'hidden',
+                zIndex:1
             },
             optionsTextContainer:{
                 width:'100%',
@@ -131,7 +132,6 @@ const useStyles = ()=>{
             optionsText:{
                 color:theme.theme.primaryText,
                 fontSize:20,
-
             },
             chartContainer:{
                 width:'100%',
@@ -247,6 +247,7 @@ export const DashboardPage = ()=>{
     }
 
     const handleWeekButtonClick = ()=>{
+        handleClosePeriodOptions()
         if(currPeriodType==='week'){
             return
         }

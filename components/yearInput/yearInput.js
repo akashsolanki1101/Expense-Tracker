@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 
 import {View,Text,TextInput,StyleSheet,TouchableWithoutFeedback,TouchableNativeFeedback,ToastAndroid} from 'react-native'
+import {useSelector} from 'react-redux'
 
 import {useTheme} from '../ui/themeContext/themeContext'
 import {ErrorBox} from '../errorBox/errorBox'
@@ -66,11 +67,15 @@ const useStyles = ()=>{
 
 export const YearInput= ({close,inputChange,value,onSubmit})=>{
     const styles = useStyles()
-    const [lengthLimit,setLengthLimit] = useState(4-value.length)
+    
+    const selectedYear  = useSelector(state=>state.period.year)
+    const [yearInput,setYearInput] = useState(selectedYear)
+    const [lengthLimit,setLengthLimit] = useState(4-selectedYear.length)
 
-    const handleInputChange = (value)=>{
-        setLengthLimit(4-value.length)
-        inputChange(value)
+    const handleInputChange = (data)=>{
+        setLengthLimit(4-data.length)
+        inputChange(data)
+        setYearInput(data)
     }
 
     const handleOkButtonClick = ()=>{
@@ -98,7 +103,7 @@ export const YearInput= ({close,inputChange,value,onSubmit})=>{
                         <View style={styles.textInputContainer}>
                             <TextInput 
                                 style={styles.textInput}
-                                value={value}
+                                value={yearInput}
                                 onChangeText={handleInputChange}
                                 maxLength={4}
                                 keyboardType='number-pad'
