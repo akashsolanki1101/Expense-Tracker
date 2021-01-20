@@ -6,7 +6,7 @@ import {useSelector} from 'react-redux'
 import {useTheme} from '../ui/themeContext/themeContext'
 import {CategoryCard} from '../cards/categoryCard/categoryCard'
 import {TransactionsList} from '../transactionsList/transactionsList'
-import {getCurrentWeekTotalAmount,getCurrentWeekData} from '../../dataExtractor/dataExtractor'
+import {getTotalAmount,getCurrentWeekData,getYearData} from '../../dataExtractor/dataExtractor'
 
 const useStyles = ()=>{
     const theme = useTheme()
@@ -50,11 +50,23 @@ const useStyles = ()=>{
 
 export const CategoryPage = ({route})=>{
     const styles = useStyles()
+
     const categoryName = route.params.categoryName
+    
     const expenseTransactionsList = useSelector(state=>state.transaction.expenseData)
+    const currPeriodType = useSelector(state=>state.period.period)
+    
     const selectedCategoryTransactionsList = expenseTransactionsList.filter(item=>item.category===categoryName)
-    const currPeriodExpenseList = getCurrentWeekData(expenseTransactionsList,expenseTransactionsList.length)
-    const currPeriodTotalExpense = getCurrentWeekTotalAmount(currPeriodExpenseList,currPeriodExpenseList.length)
+
+    let currPeriodExpenseList
+    
+    if(currPeriodType==='week'){
+        currPeriodExpenseList = getCurrentWeekData(expenseTransactionsList,expenseTransactionsList.length)
+    }else{
+        currPeriodExpenseList = getYearData(expenseTransactionsList,expenseTransactionsList.length)
+    }
+    
+    const currPeriodTotalExpense = getTotalAmount(currPeriodExpenseList,currPeriodExpenseList.length)
     let categoryExpense = 0
 
     for(let i=0;i<selectedCategoryTransactionsList.length;i++){
@@ -62,7 +74,6 @@ export const CategoryPage = ({route})=>{
     }
 
     const categoryPercent = currPeriodTotalExpense!==0?((categoryExpense/currPeriodTotalExpense)*100).toFixed(2):0
-    console.log(currPeriodExpenseList,currPeriodTotalExpense,categoryExpense,categoryPercent);
 
     return(
         <View style={styles.container}>

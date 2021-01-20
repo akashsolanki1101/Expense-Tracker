@@ -16,6 +16,7 @@ import {setTransactions} from '../../store/actions/transactionDataActions'
 import {dark} from '../ui/theme/darkTheme'
 import {light} from '../ui/theme/lightTheme'
 import {SplashScreen} from '../splashScreen/splashScreen'
+import {getCurrWeekStartEndDates} from '../../dataExtractor/dataExtractor'
 
 const useStyles = ()=>{
     const theme = useTheme()
@@ -38,6 +39,8 @@ export const Layout = ()=>{
     const [showEnterNamePage,setShowEnterNamePage] = useState(false)
     const [showSplash,setShowSplash] = useState(true)
     const [showNavigation,setShowNavigation] = useState(false)
+
+    const dates = getCurrWeekStartEndDates()
 
     const dispatch = useDispatch()
 
@@ -102,10 +105,9 @@ export const Layout = ()=>{
     },[db])
 
     const fetchTransactions = useCallback(()=>{
-        db.transaction(
-            tx => {
+        db.transaction(tx=>{
             tx.executeSql(
-                'SELECT * FROM transactions ORDER BY id DESC',
+                `SELECT * FROM transactions WHERE key>=${dates[0]} AND key<=${dates[1]} ORDER BY id DESC`,
                 [],
                 (_,results)=>{
                     const length = results.rows.length
@@ -130,7 +132,7 @@ export const Layout = ()=>{
             ); 
             },
         );
-    },[db])
+    },[db,dates])
 
 
     useEffect(()=>{

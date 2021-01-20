@@ -16,12 +16,16 @@ const useStyles = ()=>{
     )
 }
 
-export const Chart = ({data,transparent,withInnerLines,listenThemeChange,height,backgroundGradientFrom,backgroundGradientTo})=>{
+export const Chart = ({data,transparent,withInnerLines,listenThemeChange,height,backgroundGradientFrom,backgroundGradientTo,toolTipTextColor,periodType})=>{
     const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0, visible: false, value: 0 })
-    const [graphData,setGraphData] = useState({labels:["M","T","W","T","F","S","S"],data:[10,60,200,50,100,70,200]})
     const styles = useStyles()
     const theme = useTheme()
 
+    const labels = {
+        week:['M','T','W','T','F','S','S'],
+        year:['J','F','M','A','M','J','J','A','S','O','N','D']
+    }
+    
     const chartConfig= {
         backgroundGradientFrom: backgroundGradientFrom,
         backgroundGradientTo: backgroundGradientTo,
@@ -59,7 +63,6 @@ export const Chart = ({data,transparent,withInnerLines,listenThemeChange,height,
     const handleClickOnDataPoint = (data)=>{
         const isSamePoint = (tooltipPos.x === data.x && tooltipPos.y === data.y)
         hideToolTip()
-        console.log(data.value);
         
         isSamePoint?
         setTooltipPos((previousState) => {
@@ -80,20 +83,44 @@ export const Chart = ({data,transparent,withInnerLines,listenThemeChange,height,
 
         if(length>3 && length<6)    
         {  
-            modifiedLabel = num / 1000;
+            modifiedLabel = (num / 1000).toFixed(2);
             modifiedLabel = `${modifiedLabel}k`
         }
-
-        if(length>5 && length<8)    
+        
+        else if(length>5 && length<8)    
         {  
-            modifiedLabel = num / 100000;
+            modifiedLabel = (num / 100000).toFixed(2);
             modifiedLabel = `${modifiedLabel}L`
         }
 
-        if(length>7)    
+        else if(length>7 && length<10)    
         {  
-            modifiedLabel = num / 10000000;
+            modifiedLabel = (num / 10000000).toFixed(2);
             modifiedLabel = `${modifiedLabel}cr`
+        }
+
+        else if(length>9 && length<12)    
+        {  
+            modifiedLabel = (num/ 1000000000).toFixed(2);
+            modifiedLabel = `${modifiedLabel}ar`
+        }
+
+        else if(length>11 && length<14)    
+        {  
+            modifiedLabel = (num / 100000000000).toFixed(2);
+            modifiedLabel = `${modifiedLabel}kh`
+        }
+
+        else if(length>13 && length<16)    
+        {  
+            modifiedLabel = (num / 10000000000000).toFixed(2);
+            modifiedLabel = `${modifiedLabel}nl`
+        }
+
+        else if(length>15)    
+        {  
+            modifiedLabel = (num / 1000000000000000).toFixed(2);
+            modifiedLabel = `${modifiedLabel}pm`
         }
 
 
@@ -108,13 +135,11 @@ export const Chart = ({data,transparent,withInnerLines,listenThemeChange,height,
                     y={tooltipPos.y + 10} 
                     width="40"
                     height="30"
-                    fill="white"
-                    stroke="black" 
                 />
                 <TextSVG
                     x={tooltipPos.x + 5}
                     y={tooltipPos.y + 30}
-                    fill="black"
+                    fill={toolTipTextColor}
                     fontSize="16"
                     fontWeight="bold"
                     textAnchor="middle">
@@ -128,7 +153,7 @@ export const Chart = ({data,transparent,withInnerLines,listenThemeChange,height,
         <View style={styles.container}>
             <LineChart
                 data={{
-                    labels: graphData.labels,
+                    labels: labels[periodType],
                     datasets: data
                 }}
                 width={Dimensions.get("window").width-36} 

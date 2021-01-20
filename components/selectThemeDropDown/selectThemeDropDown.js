@@ -25,11 +25,11 @@ const useStyles = ()=>{
                 justifyContent:'center',
                 alignItems:'center',
                 top:0,
-                left:0
+                left:0,
             },
             dropDownContainer:{
                 width:350,
-                height:255,
+                paddingVertical:8,
                 backgroundColor:theme.theme.secondaryBackground,
             },
             titleTextContainer:{

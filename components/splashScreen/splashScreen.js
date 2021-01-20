@@ -46,7 +46,7 @@ export const SplashScreen = ()=>{
             tx.executeSql('CREATE TABLE IF NOT EXISTS user(id string primary key, name string, theme string)');
         })
         db.transaction(tx=>{
-            tx.executeSql('CREATE TABLE IF NOT EXISTS transactions(id string primary key, category string, amount int, date string, particular string)')
+            tx.executeSql('CREATE TABLE IF NOT EXISTS transactions(id string primary key, category string, amount int, date string, particular string,key int)')
         })
     },[db])
 

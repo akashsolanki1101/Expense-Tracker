@@ -22,6 +22,7 @@ export const HomeNavigator = ()=>{
     return(
         <Tab.Navigator 
             tabBarOptions={{
+                keyboardHidesTabBar:true,
                 activeTintColor:theme.theme.activeColor,
                 style:{
                     borderTopWidth:1,

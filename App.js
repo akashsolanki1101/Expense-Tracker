@@ -7,10 +7,12 @@ import {Layout} from "./components/layout/layout"
 import {ThemeManager} from './components/ui/themeManager/themeManager'
 import UserInfoReducer from './store/reducers/userInfoReducer'
 import TransactionDataReducer from './store/reducers/transactionDataReducer'
+import PeriodReducer from './store/reducers/periodReducer'
 
 const RootReducer = combineReducers({
   user:UserInfoReducer,
-  transaction:TransactionDataReducer
+  transaction:TransactionDataReducer,
+  period:PeriodReducer
 })
 
 const store = createStore(RootReducer)

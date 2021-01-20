@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 
 import {View,Text,StyleSheet,TouchableNativeFeedback} from 'react-native'
-import {useDispatch} from 'react-redux'
+import {useDispatch,useSelector} from 'react-redux'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import {openDatabase} from 'react-native-sqlite-storage'
 
@@ -11,6 +11,7 @@ import {CategoryListDropDown} from '../categoryListDropDown/categoryListDropDown
 import {addIncomeTransaction} from '../../store/actions/transactionDataActions'
 import {addExpenseTransaction} from '../../store/actions/transactionDataActions'
 import {ErrorBox} from '../errorBox/errorBox'
+import {getCurrWeekStartEndDates,getYearStartEndDates} from '../../dataExtractor/dataExtractor'
 
 const useStyles = ()=>{
     const theme = useTheme()
@@ -105,6 +106,10 @@ const useStyles = ()=>{
 const db = openDatabase({name:'ExpenseTracker.db',location:'Documents'})
 
 export const AddTransactionPage = ({closeModal,transactionTyppe})=>{
+    const styles = useStyles()
+    const theme = useTheme()
+    const dispatch = useDispatch()
+
     const [transactionType,setTransactionType] = useState(transactionTyppe)
     const [showCategoryList,setShowCategoryList] = useState(false)
     const [showErrorBox,setShowErrorBox] = useState(false)
@@ -117,9 +122,11 @@ export const AddTransactionPage = ({closeModal,transactionTyppe})=>{
         miscellaneous:''
     })
 
-    const styles = useStyles()
-    const theme = useTheme()
-    const dispatch = useDispatch()
+    const currPeriodType = useSelector(state=>state.period.period)
+    const selectedYear = useSelector(state=>state.period.year)
+
+    const weekDates = getCurrWeekStartEndDates()
+    const yearDates = getYearStartEndDates(selectedYear)
 
     const handleChangeTransactionType = (type)=>{
         setTransactionType(type)
@@ -167,6 +174,8 @@ export const AddTransactionPage = ({closeModal,transactionTyppe})=>{
         }
 
         const currDate = new Date()
+        const parts = formData.date.split('/')
+        const key = parseInt(`${parts[2]}${parts[1]}${parts[0]}`)
         const timeStamp = currDate.getTime().toString()
         if(transactionType==='Expense'){
             const amount = Number(formData.amount)
@@ -175,15 +184,20 @@ export const AddTransactionPage = ({closeModal,transactionTyppe})=>{
                 amount : amount,
                 category : formData.category,
                 date : formData.date,
-                particular : formData.particular
+                particular : formData.particular,
+                key:key
             }
             db.transaction(txn=>{
                 txn.executeSql(
-                    'INSERT INTO transactions (id,category,amount,date,particular) VALUES (?,?,?,?,?)',
-                    [data.id,data.category,data.amount,data.date,data.particular],
+                    'INSERT INTO transactions (id,category,amount,date,particular,key) VALUES (?,?,?,?,?,?)',
+                    [data.id,data.category,data.amount,data.date,data.particular,data.key],
                     (_,results)=>{
                         if(results.rowsAffected>0){
-                            dispatch(addExpenseTransaction(data))
+                            if(currPeriodType==='week'&&(data.key>=weekDates[0]&&data.key<=weekDates[1])){
+                                dispatch(addExpenseTransaction(data))
+                            }else if(currPeriodType==='year'&&(data.key>=yearDates[0]&&data.key<=yearDates[1])){
+                                dispatch(addExpenseTransaction(data))
+                            }
                             closeModal()
                         }else{
                             setErrMessage('Unable to store transaction in local storage. Please try again.')
@@ -199,15 +213,20 @@ export const AddTransactionPage = ({closeModal,transactionTyppe})=>{
                 amount : amount,
                 date : formData.date,
                 particular : formData.miscellaneous,
-                category:'Income'
+                category:'Income',
+                key:key
             }
             db.transaction(txn=>{
                 txn.executeSql(
-                    'INSERT INTO transactions (id,category,amount,date,particular) VALUES (?,?,?,?,?)',
-                    [data.id,data.category,data.amount,data.date,data.particular],
+                    'INSERT INTO transactions (id,category,amount,date,particular,key) VALUES (?,?,?,?,?,?)',
+                    [data.id,data.category,data.amount,data.date,data.particular,data.key],
                     (_,results)=>{
                         if(results.rowsAffected>0){
-                            dispatch(addIncomeTransaction(data))
+                            if(currPeriodType==='week'&&(data.key>=weekDates[0]&&data.key<=weekDates[1])){
+                                dispatch(addIncomeTransaction(data))
+                            }else if(currPeriodType==='year'&&(data.key>=yearDates[0]&&data.key<=yearDates[1])){
+                                dispatch(addIncomeTransaction(data))
+                            }
                             closeModal()
                         }else{
                             setErrMessage('Unable to store transaction in local storage. Please try again.')
