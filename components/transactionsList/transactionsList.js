@@ -40,7 +40,7 @@ export const TransactionsList = ({data,listHeaderComp,handleScroll,transactionTy
 
     const listEmptyComp = <Text style={styles.messageText}>No transaction found!</Text>
 
-    const formattedData = formatData(data,data.length,currPeriodType)
+    const formattedData = data.length===0 ? data : formatData(data,data.length,currPeriodType)
 
     return(
         <SectionList
