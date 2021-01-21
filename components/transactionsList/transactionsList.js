@@ -22,12 +22,12 @@ const useStyles = ()=>{
             },
             sectionTitleContainer:{
                 paddingHorizontal:5,
-                // paddingVertical:4,
                 marginTop:4
             },
             sectionTitle:{
                 color:theme.theme.secondaryText,
-                fontSize:20,
+                fontSize:18,
+                fontWeight:'bold'
             }
         })
     )

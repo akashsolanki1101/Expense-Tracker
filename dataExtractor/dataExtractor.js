@@ -105,7 +105,9 @@ export const formatData = (list,length,periodType)=>{
                 particular : list[i].particular,
                 key : list[i].key
             }
-            weekData[index]['data'].push(txn)
+            if(index>=0){
+                weekData[index]['data'].push(txn)
+            }
         }
     }else if(periodType==='year'){
         for(let i=0;i<length;i++){
@@ -120,7 +122,9 @@ export const formatData = (list,length,periodType)=>{
                 particular : list[i].particular,
                 key : list[i].key
             }
-            yearData[index]['data'].push(txn)
+            if(index>=0){
+                yearData[index]['data'].push(txn)
+            }
         }
     }
 

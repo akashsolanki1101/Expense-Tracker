@@ -143,21 +143,6 @@ export const ExpenseHomePage = ({navigation})=>{
 
     let currentPeriodTransactionsList
 
-    const akash = [
-        {
-            id : '1234567895',
-            amount : 500,
-            category: 'Food',
-            date : '21/01/2021',
-            particular : 'Pizza',
-            key : '20210121'
-
-        }
-    ]
-
-    console.log(formatData(akash,akash.length,'week'));
-
-
     if(currPeriodType==='week')
     {
         currentPeriodTransactionsList = getCurrentWeekData(expenseTransactionList,expenseTransactionList.length)
