@@ -35,15 +35,15 @@
      width="200px" 
      style="float:left"/>
 ### Dashboard:
-<img src="https://i.ibb.co/yY8m848/dashboard.jpg" 
+<img src="https://i.ibb.co/bvTv8hb/Screenshot-20210127-134620-Expense-Tracker.jpg" 
      alt="Dashboard1" 
      width="200px" 
-     style="float:left"/><img src="https://i.ibb.co/DYNQ915/dashboardlight.jpg" 
+     style="float:left"/><img src="https://i.ibb.co/Dr86Y20/Screenshot-20210127-134631-Expense-Tracker.jpg" 
      alt="Dashboard2" 
      width="200px" 
      style="float:left"/>
      
-#### Building materials of the app:     
+#### Building material of the app:     
      1. React Native.
      2. Redux.
      3. Sqlite (react-native-sqlite-storage) - for connecting with local storage.
