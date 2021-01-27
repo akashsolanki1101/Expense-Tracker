@@ -5,21 +5,21 @@
 ## Some Insights of the app-
 
 ### Expense and Income page:
-<img src="https://i.ibb.co/nnTDg8q/exphome.jpg" 
+<img src="https://i.ibb.co/0CfJyK1/Screenshot-20210127-134426-Expense-Tracker.jpg" 
      alt="Expense Home Page"  
      style="float: left" 
-     width="200px"/><img src="https://i.ibb.co/9cHj1wF/exphomelight.jpg" 
+     width="200px"/><img src="https://i.ibb.co/vXG9dbC/Screenshot-20210127-134459-Expense-Tracker.jpg" 
+     alt="Expense Home Page Yearly" 
+     width="200px" 
+     style="float:left"/><img src="https://i.ibb.co/6bPdS8r/Screenshot-20210127-134742-Expense-Tracker.jpg" 
      alt="Expense Home Page Light"  
      style="float: left" 
-     width="200px"/><img src="https://i.ibb.co/tXdnBsF/inchome.jpg" 
+     width="200px"/><img src="https://i.ibb.co/60DfvmP/Screenshot-20210127-134611-Expense-Tracker.jpg" 
      alt="Income Home" 
-     width="200px" 
-     style="float:left"/><img src="https://i.ibb.co/LJm8CfQ/inchome1.jpg" 
-     alt="Income Home 1" 
      width="200px" 
      style="float:left"/>
 ### Form:
-<img src="https://i.ibb.co/mDPzPGh/addexptrans.jpg" 
+<img src="https://i.ibb.co/9ndSdJy/Screenshot-20210127-134843-Expense-Tracker.jpg" 
      alt="Form" 
      width="200px" 
      style="float:left"/>
