@@ -7,7 +7,7 @@
 ### Expense and Income page:
 <img src="https://i.ibb.co/nnTDg8q/exphome.jpg" 
      alt="Expense Home Page"  
-     style="float: left" 
+     style="float: left,margin:10px" 
      width="200px"/><img src="https://i.ibb.co/9cHj1wF/exphomelight.jpg" 
      alt="Expense Home Page Light"  
      style="float: left" 
