@@ -27,10 +27,10 @@
 <img src="https://i.ibb.co/tzC2Wxy/categories.jpg" 
      alt="Categories1" 
      width="200px" 
-     style="float:left"/><img src="https://i.ibb.co/hZrP4DR/category1.jpg" 
+     style="float:left"/><img src="https://i.ibb.co/d4pZFdp/Screenshot-20210127-134719-Expense-Tracker.jpg" 
      alt="Categories2" 
      width="200px" 
-     style="float:left"/><img src="https://i.ibb.co/TPxHv97/category2.jpg" 
+     style="float:left"/><img src="https://i.ibb.co/h8pPwfF/Screenshot-20210127-135034-Expense-Tracker.jpg" 
      alt="Categories3" 
      width="200px" 
      style="float:left"/>
