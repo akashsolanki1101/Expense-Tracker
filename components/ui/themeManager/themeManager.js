@@ -26,7 +26,6 @@ const ManageThemeProvider = ({children})=>{
         if(themeFormat==='System default'){
             subscription = Appearance.addChangeListener(({colorScheme})=>{
                 setThemeState(colorScheme)
-                console.log(colorScheme);
                 if(colorScheme==='dark'){
                     setTheme(dark.theme)
                 }else{

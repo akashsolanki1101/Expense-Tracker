@@ -29,37 +29,21 @@ export const getYearStartEndDates = (year)=>{
     return dates
 }
 
-// const getCurrentWeekDates = ()=>{
-//     const currDate = new Date()
-//     const week = []
-
-
-//     for(let i=1;i<=7;i++){
-//         const temp = currDate.getDay()===0 ? 7 : currDate.getDay()
-//         const day = currDate.getDate() - temp + i;
-//         const newDate = new Date(currDate.setDate(day)).toISOString().slice(0,10)
-//         const parts = newDate.split('-')
-//         const finalDateFormat = `${parts[2]}/${parts[1]}/${parts[0]}`
-//         week.push(finalDateFormat)
-//     }
-
-//     return week
-// }
 
 export const getCurrentWeekData = (data,length)=>{
-    const currDate = new Date()
-    const temp = currDate.getDay()===0 ? 7 : currDate.getDay()
-    const startDate = currDate.getDate() - temp + 1;
+    const weekDates = getCurrWeekStartEndDates()
+    const firstDate = weekDates[0]
 
     const finalData = [0,0,0,0,0,0,0]
 
     for(let i=0;i<length;i++){
-        const parts = data[i].date.split('/')
-        const txnDate = parseInt(parts[0])
-        const index = txnDate - startDate
-        finalData[index] += data[i].amount
+        const temp = data[i].key
+        const index = temp-firstDate
+        if(index>=0&&index<=6)
+        {
+            finalData[index] += data[i].amount
+        }
     }
-
     return finalData
 }
 
@@ -90,12 +74,14 @@ export const formatData = (list,length,periodType)=>{
     const yearData = [{title:'January',data:[]},{title:'February',data:[]},{title:'March',data:[]},{title:'April',data:[]},{title:'May',data:[]},{title:'June',data:[]},{title:'July',data:[]},{title:'August',data:[]},{title:'September',data:[]},{title:'October',data:[]},{title:'November',data:[]},{title:'December',data:[]}]
 
     const weekDates = getCurrWeekStartEndDates()
-    const firstDate = weekDates[0]%100
+    const firstDate = weekDates[0]
+
 
     if(periodType==='week'){
         for(let i=0;i<length;i++){
-            const parts = list[i].date.split('/')
-            const temp = parseInt(parts[0])
+            // const parts = list[i].date.split('/')
+            // const temp = parseInt(parts[0])
+            const temp = list[i].key
             const index = temp - firstDate
             const txn = {
                 id : list[i].id,
@@ -105,7 +91,7 @@ export const formatData = (list,length,periodType)=>{
                 particular : list[i].particular,
                 key : list[i].key
             }
-            if(index>=0){
+            if(index>=0&&index<=6){
                 weekData[index]['data'].push(txn)
             }
         }
