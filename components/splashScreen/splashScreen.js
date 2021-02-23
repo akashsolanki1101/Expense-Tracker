@@ -52,6 +52,7 @@ export const SplashScreen = ()=>{
 
     return(
         <View style={styles.container}>
+            <StatusBar barStyle={'light-content'} backgroundColor={'#000000'}/>
             <View style={styles.appIconContainer}>
                 <Image source={require('../../assets/img/app_icon.png')} style={styles.appIcon}/>
             </View>

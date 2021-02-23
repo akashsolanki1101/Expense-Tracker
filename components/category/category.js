@@ -37,7 +37,7 @@ const useStyles = ()=>{
                 fontWeight:'bold',
             },
             categoryExpense:{
-                color:'white',
+                color:theme.theme.primaryText,
                 fontSize:17,
                 fontWeight:'bold'
             },

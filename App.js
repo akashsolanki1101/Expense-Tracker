@@ -23,7 +23,7 @@ const App = ()=>{
     <Provider store={store}>
       <ThemeManager>
         <Layout/>
-        </ThemeManager>
+      </ThemeManager>
     </Provider>
   )
 }
