@@ -1,4 +1,5 @@
 # Expense-Tracker :chart_with_upwards_trend:
+-App link - https://appdistribution.firebase.google.com/pub/i/10f7560d1748b3f9
 
 #### App helps in keeping the information about the expenses and incomes. It presents the data in graphical manner. You can experience it in both dark and light mode.   
 
